@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 
 
-@TeleOp(name = "AutoBlueBrick", group = "Auto")
+@TeleOp(name = "AutoRedBrick", group = "Auto") // RENAME //
 //originally had it as TeleOp b/c Autonomous wasn't working, but changed back over
 public class AutoRedBrick extends LinearOpMode {
     private Robot2017 robot;

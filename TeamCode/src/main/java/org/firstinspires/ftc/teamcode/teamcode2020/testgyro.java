@@ -32,7 +32,7 @@ public class testgyro extends LinearOpMode {
 
         double distTravelled = 2.0;
 
-        //*inputGameConfig();
+        //inputGameConfig();
 
 
         //Wait for the match to begin, presses start button

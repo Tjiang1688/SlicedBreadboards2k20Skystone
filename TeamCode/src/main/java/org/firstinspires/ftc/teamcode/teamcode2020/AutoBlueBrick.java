@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
 import org.firstinspires.ftc.teamcode.game.robot.Convert;
@@ -42,21 +43,37 @@ public class AutoBlueBrick extends LinearOpMode {
 
         while (opModeIsActive()) {
             robot.composeIMUTelemetry();
+            telemetry.log().setDisplayOrder(Telemetry.Log.DisplayOrder.OLDEST_FIRST);
+            // We can control the number of lines shown in the log
+            telemetry.log().setCapacity(6);
+
             robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(2), robot.getHeading());
+            telemetry.log().add(String.valueOf(robot.frMotor.getCurrentPosition()));
+            telemetry.log().add(String.valueOf(robot.flMotor.getCurrentPosition()));
+            telemetry.log().add(String.valueOf(robot.brMotor.getCurrentPosition()));
+            telemetry.log().add(String.valueOf(robot.blMotor.getCurrentPosition()));
+            wait(100000);
+            /*
             robot.gyrodrive.turn(0.7, -90);
             telemetry.addData("arrive at", "bricks");
 
-            /**
+             */
+
+            /*
 
             if (color_sensor.argb() > 100){
                 robot.gyrodrive.vertical(0.7, .5, robot.getHeading());
             }
-            **/
+            */
+
+            /*
 
             robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(distTravelled), robot.getHeading());
             robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-distTravelled), robot.getHeading());
             robot.gyrodrive.turn(0.7, -180);
             robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(1), robot.getHeading());
+            */
+
 
 
 

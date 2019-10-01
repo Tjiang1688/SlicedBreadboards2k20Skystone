@@ -409,15 +409,15 @@ public class Robot2017 {
             brTarget = brMotor.getCurrentPosition() + (int) (-distance * COUNTS_PER_INCH);
 
             // Set Target and Turn On RUN_TO_POSITION
-            flMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            frMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            blMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            brMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
             flMotor.setTargetPosition(flTarget);
             frMotor.setTargetPosition(frTarget);
             blMotor.setTargetPosition(blTarget);
             brMotor.setTargetPosition(brTarget);
+
+            flMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            frMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            blMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            brMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // Start motion.
             flMotor.setPower(Range.clip(Math.abs(speed), 0.0, 1.0)); // DONT KNOW WHY RANGE Math.abs(speed)
@@ -503,15 +503,15 @@ public class Robot2017 {
             brTarget = brMotor.getCurrentPosition() + (int) (-distance * COUNTS_PER_INCH);
 
             // Set Target and Turn On RUN_TO_POSITION
-            flMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            frMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            blMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            brMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
             flMotor.setTargetPosition(flTarget);
             frMotor.setTargetPosition(frTarget);
             blMotor.setTargetPosition(blTarget);
             brMotor.setTargetPosition(brTarget);
+
+            flMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            frMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            blMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            brMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // start motion.
             flMotor.setPower(Range.clip(Math.abs(speed), 0.0, 1.0)); // DONT KNOW WHY RANGE Math.abs(speed)
