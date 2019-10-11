@@ -40,15 +40,15 @@ public class testgyro extends LinearOpMode {
         robot.imu.startAccelerationIntegration(new Position(), new Velocity(), 1000);
 
 
-        while (opModeIsActive()) {
-            robot.composeIMUTelemetry();
-            robot.gyrodrive.turn(0.7, -90);
-            telemetry.addData("arrive at", "1");
-            telemetry.addData("arrive at", "2");
-            telemetry.addData("arrive at", "3");
+
+        robot.composeIMUTelemetry();
+        robot.gyrodrive.vertical(0.7, 10, robot.getHeading());
+        telemetry.addData("arrive at", "1");
+        telemetry.addData("arrive at", "2");
+        telemetry.addData("arrive at", "3");
 
 
 
-        }
+
     }
 }

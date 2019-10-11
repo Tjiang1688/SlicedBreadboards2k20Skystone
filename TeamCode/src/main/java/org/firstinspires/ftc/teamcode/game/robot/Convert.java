@@ -5,7 +5,7 @@ package org.firstinspires.ftc.teamcode.game.robot;
  */
 
 public class Convert {
-    public static final double inchesInAYeetGyro = 2.00; // GYRO
+    public static final double inchesInAYeetGyro = 2.60; // GYRO4
     public static final double inchesInAYeetGyroHorizontal = 0.825; // GYRO HORIZONTAL
     public static final double inchesInAYeetNormal = 0.825; // NORMAL
     public static final double tileSize = 23.5;

@@ -164,6 +164,7 @@ public class SensorBNO055IMU extends LinearOpMode
                 @Override public String value() {
                     return String.format(Locale.getDefault(), "%.3f",
                             Math.sqrt(gravity.xAccel*gravity.xAccel
+                                    //#########################################################################
                                     + gravity.yAccel*gravity.yAccel
                                     + gravity.zAccel*gravity.zAccel));
                     }

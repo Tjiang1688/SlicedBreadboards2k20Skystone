@@ -697,7 +697,7 @@ public class Robot2017 {
             double robotError;
 
             // calculate error in -179 to +180 range  (
-            robotError = targetAngle - imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
+            robotError = targetAngle + imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
             while (robotError > 180)  robotError -= 360;
             while (robotError <= -180) robotError += 360;
 
