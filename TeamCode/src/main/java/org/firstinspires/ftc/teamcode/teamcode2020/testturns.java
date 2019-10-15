@@ -18,9 +18,9 @@ import java.util.concurrent.TimeUnit;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 
 
-@TeleOp(name = "testgyro", group = "auto")
+@TeleOp(name = "testturns", group = "auto")
 //originally had it as TeleOp b/c Autonomous wasn't working, but changed back over
-public class testgyro extends LinearOpMode {
+public class testturns extends LinearOpMode {
     private Robot2017 robot;
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -42,6 +42,8 @@ public class testgyro extends LinearOpMode {
 
 
             robot.composeIMUTelemetry();
+            telemetry.log().add(String.valueOf(robot.getHeading()));
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(2), 90);
             telemetry.log().add(String.valueOf(robot.getHeading()));
 
         }

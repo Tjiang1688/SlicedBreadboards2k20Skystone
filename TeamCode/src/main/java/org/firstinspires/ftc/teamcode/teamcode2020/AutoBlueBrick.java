@@ -48,26 +48,25 @@ public class AutoBlueBrick extends LinearOpMode {
             telemetry.log().setCapacity(6);
 
             robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(2), robot.getHeading());
+            telemetry.log().add(String.valueOf(robot.getHeading()));
             robot.gyrodrive.turn(0.7, -90);
+            telemetry.log().add(String.valueOf(robot.getHeading()));
             telemetry.addData("arrive at", "bricks");
 
-            /**
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(2), 90);
+            telemetry.log().add(String.valueOf(robot.getHeading()));
 
-             if (color_sensor.argb() > 100){
-             robot.gyrodrive.vertical(0.7, .5, robot.getHeading());
-             }
-             **/
-
-            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(distTravelled), robot.getHeading());
-            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-distTravelled), robot.getHeading());
-            robot.gyrodrive.turn(0.7, -180);
-            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(1), robot.getHeading());
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-2), 90);
+            //robot.gyrodrive.turn(0.7, -180);
+            break;
+            //robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(1), robot.getHeading());
 
 
-            telemetry.log().add(String.valueOf(robot.frMotor.getCurrentPosition()));
-            telemetry.log().add(String.valueOf(robot.flMotor.getCurrentPosition()));
-            telemetry.log().add(String.valueOf(robot.brMotor.getCurrentPosition()));
-            telemetry.log().add(String.valueOf(robot.blMotor.getCurrentPosition()));
+
+            //telemetry.log().add(String.valueOf(robot.frMotor.getCurrentPosition()));
+            //telemetry.log().add(String.valueOf(robot.flMotor.getCurrentPosition()));
+            //telemetry.log().add(String.valueOf(robot.brMotor.getCurrentPosition()));
+            //telemetry.log().add(String.valueOf(robot.blMotor.getCurrentPosition()));
             /*
             robot.gyrodrive.turn(0.7, -90);
             telemetry.addData("arrive at", "bricks");
