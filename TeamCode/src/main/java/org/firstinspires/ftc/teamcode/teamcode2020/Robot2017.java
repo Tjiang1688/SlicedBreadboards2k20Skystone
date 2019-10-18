@@ -697,7 +697,8 @@ public class Robot2017 {
             double robotError;
 
             // calculate error in -179 to +180 range  (
-            robotError = targetAngle + imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
+            // HERE TIANA ASDFGHJKLLKJHGFDSASDFGHJKLJDSASDFGHJKLJGFDSASDFGHJKLKJHGFDSAASDFGHJKLKJHGFDSASDFGHJKLKJHGFDSA
+            robotError = targetAngle - imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
             while (robotError > 180)  robotError -= 360;
             while (robotError <= -180) robotError += 360;
 
@@ -714,7 +715,7 @@ public class Robot2017 {
          * @return
          */
         public double getSteer(double error, double PCoeff) {
-            return Range.clip(error * PCoeff, -1, 1);
+            return Range.clip(-error * PCoeff, -1, 1);
         }
 
         private int correctCount = 0;

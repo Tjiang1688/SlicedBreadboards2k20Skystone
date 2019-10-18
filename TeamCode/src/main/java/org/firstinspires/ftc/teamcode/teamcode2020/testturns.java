@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
 import org.firstinspires.ftc.teamcode.game.robot.Convert;
+import com.qualcomm.ftccommon.SoundPlayer;
 import org.firstinspires.ftc.teamcode.game.robot.StartPosition;
 
 import java.util.concurrent.TimeUnit;
@@ -42,9 +43,26 @@ public class testturns extends LinearOpMode {
 
 
             robot.composeIMUTelemetry();
+
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(2), robot.getHeading());
             telemetry.log().add(String.valueOf(robot.getHeading()));
-            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(2), 90);
-            telemetry.log().add(String.valueOf(robot.getHeading()));
+            robot.gyrodrive.turn(0.7, -90);
+
+            if (-87 >= robot.getHeading() & robot.getHeading() >= -93) {
+
+                robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(2), robot.getHeading());
+
+
+                while (opModeIsActive()) {
+                    telemetry.log().add(String.valueOf(robot.getHeading()));
+                }
+                robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(2), -robot.getHeading());
+            }
+
+
+
+            //robot.gyrodrive.turn(0.7, -180);
+            break;
 
         }
 
