@@ -49,8 +49,8 @@ public class Robot2017 {
     public boolean isHooked;
 
     //left and right side feeder motors
-    public DcMotor lfMotor;
-    public DcMotor rfMotor;
+    public DcMotor lfeedMotor;
+    public DcMotor rfeedMotor;
 
     /////////////////////////////////////////////////////////////////////// YO TIANA DO SMTH WITH THE TOUCH SENSOR FOR THE BLOCKS
 
@@ -99,8 +99,8 @@ public class Robot2017 {
         frMotor = hwMap.dcMotor.get("frmotor");
         blMotor = hwMap.dcMotor.get("blmotor");
         brMotor = hwMap.dcMotor.get("brmotor");
-        lfMotor = hwMap.dcMotor.get("lfmotor");
-        rfMotor = hwMap.dcMotor.get("rfmotor");
+        lfeedMotor = hwMap.dcMotor.get("lfmotor");
+        rfeedMotor = hwMap.dcMotor.get("rfmotor");
         //color_sensor = hwMap.colorSensor.get("color");
 
         imu = hwMap.get(BNO055IMU.class, "imu");
@@ -233,8 +233,8 @@ public class Robot2017 {
             frMotor.setPower(0);
             blMotor.setPower(0);
             brMotor.setPower(0);
-            lfMotor.setPower(0);
-            rfMotor.setPower(0);
+            lfeedMotor.setPower(0);
+            rfeedMotor.setPower(0);
             resetMotors();
         }
 

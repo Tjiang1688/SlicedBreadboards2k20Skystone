@@ -99,8 +99,8 @@ public class MecanumDrive extends LinearOpMode {
             }
 
 
-            robot.rfMotor.setPower(feederPow);
-            robot.lfMotor.setPower(-feederPow);
+            robot.rfeedMotor.setPower(feederPow);
+            robot.lfeedMotor.setPower(-feederPow);
             idle(); // Always call idle() at the bottom of your while(opModeIsActive()) loop
 
         }
