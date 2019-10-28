@@ -50,9 +50,9 @@ public class MecanumDrive extends LinearOpMode {
 
 
             if (gamepad2.dpad_down) {
-                feederPow = -0.75;
+                feederPow = -0.5;
             } else if (gamepad2.dpad_up) {
-                feederPow = 0.75;
+                feederPow = 0.5;
             } else {
                 feederPow = 0;
             }

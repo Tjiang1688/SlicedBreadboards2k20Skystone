@@ -44,7 +44,7 @@ public class testturns extends LinearOpMode {
 
             robot.composeIMUTelemetry();
 
-            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(2), robot.getHeading());
+
             telemetry.log().add(String.valueOf(robot.getHeading()));
             robot.gyrodrive.turn(0.7, -90);
 

@@ -37,7 +37,9 @@ public class Robot2017 {
     public DcMotor frMotor;
     public DcMotor blMotor;
     public DcMotor brMotor;
-    //public ColorSensor color_sensor;
+
+    public ColorSensor colorSensor;
+
     public BNO055IMU imu;
 
     //Drive Trains
@@ -99,9 +101,9 @@ public class Robot2017 {
         frMotor = hwMap.dcMotor.get("frmotor");
         blMotor = hwMap.dcMotor.get("blmotor");
         brMotor = hwMap.dcMotor.get("brmotor");
-        lfeedMotor = hwMap.dcMotor.get("lfmotor");
-        rfeedMotor = hwMap.dcMotor.get("rfmotor");
-        //color_sensor = hwMap.colorSensor.get("color");
+        lfeedMotor = hwMap.dcMotor.get("lfeedmotor");
+        rfeedMotor = hwMap.dcMotor.get("rfeedmotor");
+        colorSensor = hwMap.colorSensor.get("colorSensor");
 
         imu = hwMap.get(BNO055IMU.class, "imu");
     }

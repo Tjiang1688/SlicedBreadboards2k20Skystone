@@ -23,6 +23,7 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 public class testgyro extends LinearOpMode {
     private Robot2017 robot;
     private ElapsedTime runtime = new ElapsedTime();
+    private ColorSensor colorSensor;
 
     public void runOpMode() throws InterruptedException {
         robot = new Robot2017();
@@ -42,7 +43,7 @@ public class testgyro extends LinearOpMode {
 
 
             robot.composeIMUTelemetry();
-            telemetry.log().add(String.valueOf(robot.getHeading()));
+            telemetry.log().add(String.valueOf(colorSensor.argb()));
 
         }
 
