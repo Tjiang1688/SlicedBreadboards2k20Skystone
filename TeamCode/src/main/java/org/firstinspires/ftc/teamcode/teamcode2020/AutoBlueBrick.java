@@ -17,6 +17,7 @@ import org.firstinspires.ftc.teamcode.game.robot.StartPosition;
 import java.util.concurrent.TimeUnit;
 
 import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 
 
 @TeleOp(name = "AutoBlueBrick", group = "auto")
@@ -25,12 +26,18 @@ public class AutoBlueBrick extends LinearOpMode {
     private Robot2017 robot;
     private ElapsedTime runtime = new ElapsedTime();
     private ColorSensor colorSensor;
+    private TouchSensor touchSensor;
+
+
 
     public void runOpMode() throws InterruptedException {
         robot = new Robot2017();
         robot.init(hardwareMap);
         robot.setTelemetry(telemetry);
         robot.setTime(runtime);
+
+        colorSensor = hardwareMap.colorSensor.get("colorSensor");
+        touchSensor = hardwareMap.touchSensor.get("touchSensor");
 
 
         double distTravelled = 2.0;
@@ -46,18 +53,23 @@ public class AutoBlueBrick extends LinearOpMode {
 
 
             robot.composeIMUTelemetry();
+            /*
 
             robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(2), robot.getHeading());
             telemetry.log().add(String.valueOf(robot.getHeading()));
             robot.gyrodrive.turn(0.7, -90);
             robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(2), robot.getHeading());
+
+             */
+            
             if (colorSensor.argb() < 100){
                 feederPow = .5;
+            }
+            while (touchSensor.getValue() == 0) {
                 robot.rfeedMotor.setPower(feederPow);
                 robot.lfeedMotor.setPower(-feederPow);
             }
-            robot.rfeedMotor.setPower(feederPow);
-            robot.lfeedMotor.setPower(-feederPow);
+
             robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-2), robot.getHeading());
 
 

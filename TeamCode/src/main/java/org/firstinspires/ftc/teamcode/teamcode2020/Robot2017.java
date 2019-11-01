@@ -25,6 +25,7 @@ import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 
 /**
  * This is NOT an opmode.
@@ -39,6 +40,8 @@ public class Robot2017 {
     public DcMotor brMotor;
 
     public ColorSensor colorSensor;
+    public TouchSensor touchSensor;
+
 
     public BNO055IMU imu;
 
@@ -104,6 +107,7 @@ public class Robot2017 {
         lfeedMotor = hwMap.dcMotor.get("lfeedmotor");
         rfeedMotor = hwMap.dcMotor.get("rfeedmotor");
         colorSensor = hwMap.colorSensor.get("colorSensor");
+        touchSensor = hwMap.touchSensor.get("touchSensor");
 
         imu = hwMap.get(BNO055IMU.class, "imu");
     }
