@@ -22,9 +22,9 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
 
-@TeleOp(name = "AutoBlueBrick", group = "auto")
+@TeleOp(name = "oldAuto", group = "auto")
 //originally had it as TeleOp b/c Autonomous wasn't working, but changed back over
-public class AutoBlueBrick extends LinearOpMode {
+public class oldAuto extends LinearOpMode {
     private Robot2017 robot;
     private ElapsedTime runtime = new ElapsedTime();
     private ColorSensor colorSensor;
@@ -58,57 +58,49 @@ public class AutoBlueBrick extends LinearOpMode {
 
             robot.composeIMUTelemetry();
 
-            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-1.3), robot.getHeading());
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(2), robot.getHeading());
+            telemetry.log().add(String.valueOf(robot.getHeading()));
+            robot.gyrodrive.turn(0.7, -90);
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(2), robot.getHeading());
 
-            while (colorSensor.red() + colorSensor.blue() + colorSensor.green() > 525){
-                robot.gyrodrive.vertical(0.3, Convert.tileToYeetGV(.2), robot.getHeading());
-                stoneCount +=1;
-            }
+            while (!skystone) {
+                while (touchSensor.getValue() != 1) {
+                    feederPow = .5;
+                    robot.rfeedMotor.setPower(-feederPow);
+                    robot.lfeedMotor.setPower(feederPow);
+                }
 
-            robot.gyrodrive.vertical(-0.3, Convert.tileToYeetGV(.5), robot.getHeading());
-            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-.5), robot.getHeading());
-
-
-            while (touchSensor.getValue() != 1) {
-                robot.gyrodrive.vertical(0.1, Convert.tileToYeetGV(.5), robot.getHeading());
-                feederPow = .5;
-                robot.rfeedMotor.setPower(-feederPow);
-                robot.lfeedMotor.setPower(feederPow);
-            }
-
-            feederPow = 0;
-
-            robot.rfeedMotor.setPower(-feederPow);
-            robot.lfeedMotor.setPower(feederPow);
-            /*
-
-            robot.gyrodrive.vertical(-0.7, Convert.tileToYeetGV(.5), robot.getHeading());
-            robot.gyrodrive.turn(0.7, -180);
-
-            if (colorSensor.red() + colorSensor.blue() + colorSensor.green() > 525) {
-                feederPow = -.5;
-                robot.rfeedMotor.setPower(-feederPow);
-                robot.lfeedMotor.setPower(feederPow);
-                wait(2000);
-                feederPow = .5;
-                robot.gyrodrive.turn(0.7, -90);
-                robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(1), robot.getHeading());
-                stoneCount += 1;
-
-            }else{
-                skystone = true;
                 feederPow = 0;
+
+                robot.rfeedMotor.setPower(-feederPow);
+                robot.lfeedMotor.setPower(feederPow);
+
+                robot.gyrodrive.vertical(-0.7, Convert.tileToYeetGV(.5), robot.getHeading());
+                robot.gyrodrive.turn(0.7, -180);
+
+                if (colorSensor.red() + colorSensor.blue() + colorSensor.green() > 525) {
+                    feederPow = -.5;
+                    robot.rfeedMotor.setPower(-feederPow);
+                    robot.lfeedMotor.setPower(feederPow);
+                    wait(2000);
+                    feederPow = .5;
+                    robot.gyrodrive.turn(0.7, -90);
+                    robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(1), robot.getHeading());
+                    stoneCount += 1;
+
+                }else{
+                    skystone = true;
+                    feederPow = 0;
+                }
+
+                robot.rfeedMotor.setPower(-feederPow);
+                robot.lfeedMotor.setPower(feederPow);
+
+                telemetry.update();
+                break;
             }
 
-            robot.rfeedMotor.setPower(-feederPow);
-            robot.lfeedMotor.setPower(feederPow);
-
-            telemetry.update();
-
-             */
-            break;
-
-
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(stoneCount*.5), robot.getHeading());
 
         }
 

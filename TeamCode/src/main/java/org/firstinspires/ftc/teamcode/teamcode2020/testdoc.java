@@ -11,27 +11,32 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
 import org.firstinspires.ftc.teamcode.game.robot.Convert;
-import com.qualcomm.ftccommon.SoundPlayer;
 import org.firstinspires.ftc.teamcode.game.robot.StartPosition;
 
 import java.util.concurrent.TimeUnit;
 
 import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 
 
-@TeleOp(name = "testturns", group = "auto")
+@TeleOp(name = "testdoc", group = "auto")
 //originally had it as TeleOp b/c Autonomous wasn't working, but changed back over
-public class testturns extends LinearOpMode {
+public class testdoc extends LinearOpMode {
     private Robot2017 robot;
     private ElapsedTime runtime = new ElapsedTime();
+    private ColorSensor colorSensor;
+    private TouchSensor touchSensor;
 
     public void runOpMode() throws InterruptedException {
         robot = new Robot2017();
         robot.init(hardwareMap);
         robot.setTelemetry(telemetry);
         robot.setTime(runtime);
+        touchSensor = hardwareMap.touchSensor.get("touchSensor");
+        colorSensor = hardwareMap.colorSensor.get("colorSensor");
 
         double distTravelled = 2.0;
+        double feederPow = 0;
 
         //inputGameConfig();
 
@@ -42,27 +47,9 @@ public class testturns extends LinearOpMode {
         while (opModeIsActive()) {
 
 
-            robot.composeIMUTelemetry();
-
-
-            telemetry.log().add(String.valueOf(robot.getHeading()));
-            robot.gyrodrive.turn(0.7, -90);
-
-            if (-87 >= robot.getHeading() & robot.getHeading() >= -93) {
-
-                robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(2), robot.getHeading());
-
-
-                while (opModeIsActive()) {
-                    telemetry.log().add(String.valueOf(robot.getHeading()));
-                }
-                robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(2), -robot.getHeading());
-            }
-
-
-
-            //robot.gyrodrive.turn(0.7, -180);
-            break;
+            feederPow = .5;
+            robot.rfeedMotor.setPower(-feederPow);
+            robot.lfeedMotor.setPower(feederPow);
 
         }
 
