@@ -41,6 +41,7 @@ public class AutoRedBrick extends LinearOpMode {
         int stoneCount = 0;
         float hsvValues[] = {0F, 0F, 0F};
         double feederPow = 0;
+        double distanceDown = 0;
 
         //*inputGameConfig();
 
@@ -59,15 +60,16 @@ public class AutoRedBrick extends LinearOpMode {
             //robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-1.3), robot.getHeading());
             robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(1), robot.getHeading());
             robot.gyrodrive.turn(0.7, -90);
-            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-0.4), robot.getHeading());
+            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-0.5), robot.getHeading());
 
             while (colorSensor.red() + colorSensor.blue() + colorSensor.green() > 525){
-                robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-.2), robot.getHeading());
+                robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-.33), robot.getHeading());
+                distanceDown += 0.33;
                 stoneCount +=1;
             }
 
-            robot.gyrodrive.vertical(-0.7, Convert.tileToYeetGV(.6), robot.getHeading());
-            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-.8), robot.getHeading());
+            robot.gyrodrive.vertical(-0.7, Convert.tileToYeetGV(.38), robot.getHeading());  // Back of robot is 0.33 tiles
+            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-.8), robot.getHeading());  //TODO Find proper distance
 
 
             while (touchSensor.getValue() != 1) {

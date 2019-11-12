@@ -61,15 +61,15 @@ public class AutoBlueBrick extends LinearOpMode {
             //robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-1.3), robot.getHeading());
             robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(1), robot.getHeading());
             robot.gyrodrive.turn(0.7, -90);
-            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-0.4), robot.getHeading());
+            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-0.5), robot.getHeading());
 
             while (colorSensor.red() + colorSensor.blue() + colorSensor.green() > 525){
-                robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(.2), robot.getHeading());
+                robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(.33), robot.getHeading());
                 stoneCount +=1;
             }
 
-            robot.gyrodrive.vertical(-0.7, Convert.tileToYeetGV(.6), robot.getHeading());
-            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-.8), robot.getHeading());
+            robot.gyrodrive.vertical(-0.7, Convert.tileToYeetGV(.6), robot.getHeading());  // .55 is the length of the front of the robot
+            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-.8), robot.getHeading());  //TODO find a proper distance
 
 
             while (touchSensor.getValue() != 1) {
