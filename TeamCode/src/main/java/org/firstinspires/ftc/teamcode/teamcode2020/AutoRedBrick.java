@@ -4,8 +4,11 @@ package org.firstinspires.ftc.teamcode.teamcode2020;
  * Created by 22tjiang on 9/13/19.
  */
 
+import android.graphics.Color;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
@@ -22,14 +25,21 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 public class AutoRedBrick extends LinearOpMode {
     private Robot2017 robot;
     private ElapsedTime runtime = new ElapsedTime();
+    private ColorSensor colorSensor;
+    private TouchSensor touchSensor;
 
     public void runOpMode() throws InterruptedException {
         robot = new Robot2017();
         robot.init(hardwareMap);
         robot.setTelemetry(telemetry);
         robot.setTime(runtime);
+        touchSensor = hardwareMap.touchSensor.get("touchSensor");
+        colorSensor = hardwareMap.get(ColorSensor.class, "colorSensor");
 
         double distTravelled = 2.0;
+        final double SCALE_FACTOR = 255;
+        int stoneCount = 0;
+        double feederPow = 0;
 
         //*inputGameConfig();
 
@@ -40,32 +50,37 @@ public class AutoRedBrick extends LinearOpMode {
 
 
         while (opModeIsActive()) {
+            Color.RGBToHSV((int)(colorSensor.red() * SCALE_FACTOR), (int) (colorSensor.green() * SCALE_FACTOR), (int) (colorSensor.blue() * SCALE_FACTOR), hsvValues);
+
+
             robot.composeIMUTelemetry();
-            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(2), robot.getHeading());
-            robot.gyrodrive.turn(0.7, 90);
-            telemetry.addData("arrive at", "bricks");
 
-            /**
-
-             if (color_sensor.argb() > 100){
-             robot.gyrodrive.vertical(0.7, .5, robot.getHeading());
-             }
-             **/
-
-            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(distTravelled), robot.getHeading());
-            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-distTravelled), robot.getHeading());
-            robot.gyrodrive.turn(0.7, 180);
+            //robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-1.3), robot.getHeading());
             robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(1), robot.getHeading());
+            robot.gyrodrive.turn(0.7, -90);
+            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-0.4), robot.getHeading());
+
+            while (colorSensor.red() + colorSensor.blue() + colorSensor.green() > 525){
+                robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-.2), robot.getHeading());
+                stoneCount +=1;
+            }
+
+            robot.gyrodrive.vertical(-0.7, Convert.tileToYeetGV(.6), robot.getHeading());
+            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-.8), robot.getHeading());
 
 
+            while (touchSensor.getValue() != 1) {
+                robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(.5), robot.getHeading());
+                feederPow = .5;
+                robot.rfeedMotor.setPower(-feederPow);
+                robot.lfeedMotor.setPower(feederPow);
+            }
 
+            feederPow = 0;
 
-
-
-
-
-
-
+            robot.rfeedMotor.setPower(-feederPow);
+            robot.lfeedMotor.setPower(feederPow);
+            break;
         }
     }
 }
