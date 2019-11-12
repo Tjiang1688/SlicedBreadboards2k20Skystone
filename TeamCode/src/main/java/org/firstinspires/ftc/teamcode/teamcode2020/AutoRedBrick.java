@@ -39,6 +39,7 @@ public class AutoRedBrick extends LinearOpMode {
         double distTravelled = 2.0;
         final double SCALE_FACTOR = 255;
         int stoneCount = 0;
+        float hsvValues[] = {0F, 0F, 0F};
         double feederPow = 0;
 
         //*inputGameConfig();
