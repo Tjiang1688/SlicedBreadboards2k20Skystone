@@ -58,19 +58,22 @@ public class AutoBlueBrick extends LinearOpMode {
 
             robot.composeIMUTelemetry();
 
-            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-1.3), robot.getHeading());
+            //robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-1.3), robot.getHeading());
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(1), robot.getHeading());
+            robot.gyrodrive.turn(0.7, -90);
+            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-0.4), robot.getHeading());
 
             while (colorSensor.red() + colorSensor.blue() + colorSensor.green() > 525){
-                robot.gyrodrive.vertical(0.3, Convert.tileToYeetGV(.2), robot.getHeading());
+                robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(.2), robot.getHeading());
                 stoneCount +=1;
             }
 
-            robot.gyrodrive.vertical(-0.3, Convert.tileToYeetGV(.5), robot.getHeading());
-            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-.5), robot.getHeading());
+            robot.gyrodrive.vertical(-0.7, Convert.tileToYeetGV(.6), robot.getHeading());
+            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-.8), robot.getHeading());
 
 
             while (touchSensor.getValue() != 1) {
-                robot.gyrodrive.vertical(0.1, Convert.tileToYeetGV(.5), robot.getHeading());
+                robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(.5), robot.getHeading());
                 feederPow = .5;
                 robot.rfeedMotor.setPower(-feederPow);
                 robot.lfeedMotor.setPower(feederPow);

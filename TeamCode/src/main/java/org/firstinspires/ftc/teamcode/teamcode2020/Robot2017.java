@@ -56,6 +56,7 @@ public class Robot2017 {
     //left and right side feeder motors
     public DcMotor lfeedMotor;
     public DcMotor rfeedMotor;
+    public DcMotor mfeedMotor;
 
     /////////////////////////////////////////////////////////////////////// YO TIANA DO SMTH WITH THE TOUCH SENSOR FOR THE BLOCKS
 
@@ -106,6 +107,7 @@ public class Robot2017 {
         brMotor = hwMap.dcMotor.get("brmotor");
         lfeedMotor = hwMap.dcMotor.get("lfeedmotor");
         rfeedMotor = hwMap.dcMotor.get("rfeedmotor");
+        mfeedMotor = hwMap.dcMotor.get("mfeedmotor");
         colorSensor = hwMap.colorSensor.get("colorSensor");
         touchSensor = hwMap.touchSensor.get("touchSensor");
 
@@ -241,6 +243,7 @@ public class Robot2017 {
             brMotor.setPower(0);
             lfeedMotor.setPower(0);
             rfeedMotor.setPower(0);
+            mfeedMotor.setPower(0);
             resetMotors();
         }
 

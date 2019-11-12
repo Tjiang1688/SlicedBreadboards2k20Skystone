@@ -24,6 +24,7 @@ public class MecanumDrive extends LinearOpMode {
         runtime.reset();
         //double armPow = 0;
         double feederPow = 0;
+        double feederWide = 0;
         double[] targets = {0, 0, 0, 0};
         double[] powers = {0, 0, 0, 0};
         //motor power is from -1.0 to 1.0;
@@ -55,6 +56,14 @@ public class MecanumDrive extends LinearOpMode {
                 feederPow = 0.5;
             } else {
                 feederPow = 0;
+            }
+
+            if (gamepad2.dpad_left) {
+                feederWide = -0.5;
+            } else if (gamepad2.dpad_right) {
+                feederWide = 0.5;
+            } else {
+                feederWide = 0;
             }
             /*
 
@@ -101,6 +110,7 @@ public class MecanumDrive extends LinearOpMode {
 
             robot.rfeedMotor.setPower(feederPow);
             robot.lfeedMotor.setPower(-feederPow);
+            robot.mfeedMotor.setPower(feederWide);
             idle(); // Always call idle() at the bottom of your while(opModeIsActive()) loop
 
         }
