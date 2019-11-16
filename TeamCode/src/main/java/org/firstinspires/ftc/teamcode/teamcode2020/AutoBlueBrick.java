@@ -58,22 +58,23 @@ public class AutoBlueBrick extends LinearOpMode {
 
             robot.composeIMUTelemetry();
 
-            //robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-1.3), robot.getHeading());
-            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(1), robot.getHeading());
-            robot.gyrodrive.turn(0.7, -90);
-            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-0.5), robot.getHeading());
+            //robot starts parallel to wall and moves horizontal to be next to and parallel to the bricks
+            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-1.3), robot.getHeading());
 
             while (colorSensor.red() + colorSensor.blue() + colorSensor.green() > 525){
                 robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(.33), robot.getHeading());
                 stoneCount +=1;
             }
 
-            robot.gyrodrive.vertical(-0.7, Convert.tileToYeetGV(.6), robot.getHeading());  // .55 is the length of the front of the robot
+
+            //robot goes back to knock the other bricks out of the way to be in front of the skystone
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-.6), robot.getHeading());  // .55 is the length of the front of the robot
             robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-.8), robot.getHeading());  //TODO find a proper distance
 
 
+
             while (touchSensor.getValue() != 1) {
-                robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(.5), robot.getHeading());
+                robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(.3), robot.getHeading());
                 feederPow = .5;
                 robot.rfeedMotor.setPower(-feederPow);
                 robot.lfeedMotor.setPower(feederPow);

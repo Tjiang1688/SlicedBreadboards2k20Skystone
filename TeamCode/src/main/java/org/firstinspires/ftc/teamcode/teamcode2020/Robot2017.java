@@ -549,9 +549,9 @@ public class Robot2017 {
                 if (distance < 0)
                     steer *= -1.0;
 
-
-                backSpeed = speed + steer;
-                frontSpeed = speed - steer;
+                //////////////////////////////////////////////////////////////////////////////////////////////////////////////strafing fix here? orig: +, -
+                backSpeed = speed - steer;
+                frontSpeed = speed + steer;
 
 
                 // Normalize speeds if either one exceeds +/- 1.0;

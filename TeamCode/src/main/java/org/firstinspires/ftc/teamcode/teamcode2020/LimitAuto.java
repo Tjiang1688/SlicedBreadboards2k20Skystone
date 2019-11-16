@@ -57,8 +57,6 @@ public class LimitAuto extends LinearOpMode {
 
             break;
 
-
-
         }
 
 
