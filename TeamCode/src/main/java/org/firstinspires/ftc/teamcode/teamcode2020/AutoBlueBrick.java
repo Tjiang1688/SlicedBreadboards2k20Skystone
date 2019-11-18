@@ -44,6 +44,7 @@ public class AutoBlueBrick extends LinearOpMode {
         float hsvValues[] = {0F, 0F, 0F};
         boolean skystone = false;
         int stoneCount = 0;
+        double v1 = .4;
 
         //inputGameConfig();
 
@@ -59,17 +60,45 @@ public class AutoBlueBrick extends LinearOpMode {
             robot.composeIMUTelemetry();
 
             //robot starts parallel to wall and moves horizontal to be next to and parallel to the bricks
-            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-1.3), robot.getHeading());
 
-            while (colorSensor.red() + colorSensor.blue() + colorSensor.green() > 525){
-                robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(.33), robot.getHeading());
-                stoneCount +=1;
+
+            while (!(colorSensor.red() + colorSensor.blue() + colorSensor.green() > 525)){
+
+                ///left
+                robot.flMotor.setPower(v1);
+                robot.frMotor.setPower(-v1);
+                robot.blMotor.setPower(-v1);
+                robot.brMotor.setPower(v1);
+
             }
+            robot.flMotor.setPower(0);
+            robot.frMotor.setPower(0);
+            robot.blMotor.setPower(0);
+            robot.brMotor.setPower(0);
+
+            TimeUnit.MILLISECONDS.sleep(1000);
+            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(.15), robot.getHeading());
+
+
+            TimeUnit.MILLISECONDS.sleep(1000);
+
+
+            while (!(colorSensor.red() + colorSensor.blue() + colorSensor.green() < 425)){
+                ///forward
+                robot.flMotor.setPower(-v1);
+                robot.frMotor.setPower(-v1);
+                robot.blMotor.setPower(-v1);
+                robot.brMotor.setPower(-v1);
+            }
+            robot.flMotor.setPower(0);
+            robot.frMotor.setPower(0);
+            robot.blMotor.setPower(0);
+            robot.brMotor.setPower(0);
 
 
             //robot goes back to knock the other bricks out of the way to be in front of the skystone
-            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-.6), robot.getHeading());  // .55 is the length of the front of the robot
-            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-.8), robot.getHeading());  //TODO find a proper distance
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-1.1), robot.getHeading());  // .55 is the length of the front of the robot
+            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-.6), robot.getHeading());  //TODO find a proper distance
 
 
 
