@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
 import org.firstinspires.ftc.teamcode.game.robot.Convert;
@@ -19,6 +20,9 @@ import java.util.concurrent.TimeUnit;
 
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.TouchSensor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
+
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 
 @TeleOp(name = "testdoc", group = "auto")
@@ -28,6 +32,8 @@ public class testdoc extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
     private ColorSensor colorSensor;
     private TouchSensor touchSensor;
+    private DistanceSensor distanceSensor;
+
 
     public void runOpMode() throws InterruptedException {
         robot = new Robot2017();
@@ -36,6 +42,7 @@ public class testdoc extends LinearOpMode {
         robot.setTime(runtime);
         touchSensor = hardwareMap.touchSensor.get("touchSensor");
         colorSensor = hardwareMap.get(ColorSensor.class, "colorSensor");
+        distanceSensor = hardwareMap.get(DistanceSensor.class, "colorSensor");
 
         double distTravelled = 2.0;
         double feederPow = 0;
@@ -57,7 +64,7 @@ public class testdoc extends LinearOpMode {
 
             robot.composeIMUTelemetry();
 
-            telemetry.addData("color", colorSensor.red() + colorSensor.blue() + colorSensor.green() > 525);
+            telemetry.addData("dist", distanceSensor.getDistance(DistanceUnit.INCH));
 
             telemetry.update();
 

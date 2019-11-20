@@ -20,6 +20,9 @@ import java.util.concurrent.TimeUnit;
 
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.TouchSensor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
+
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 
 @TeleOp(name = "AutoBlueBrick", group = "auto")
@@ -29,6 +32,7 @@ public class AutoBlueBrick extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
     private ColorSensor colorSensor;
     private TouchSensor touchSensor;
+    private DistanceSensor distanceSensor;
 
     public void runOpMode() throws InterruptedException {
         robot = new Robot2017();
@@ -37,14 +41,17 @@ public class AutoBlueBrick extends LinearOpMode {
         robot.setTime(runtime);
         touchSensor = hardwareMap.touchSensor.get("touchSensor");
         colorSensor = hardwareMap.get(ColorSensor.class, "colorSensor");
+        distanceSensor = hardwareMap.get(DistanceSensor.class, "colorSensor");
 
         double distTravelled = 2.0;
         double feederPow = 0;
+        double feederWide = 0;
         final double SCALE_FACTOR = 255;
         float hsvValues[] = {0F, 0F, 0F};
         boolean skystone = false;
         int stoneCount = 0;
         double v1 = .4;
+
 
         //inputGameConfig();
 
@@ -62,7 +69,7 @@ public class AutoBlueBrick extends LinearOpMode {
             //robot starts parallel to wall and moves horizontal to be next to and parallel to the bricks
 
 
-            while (!(colorSensor.red() + colorSensor.blue() + colorSensor.green() > 525)){
+            while (!(distanceSensor.getDistance(DistanceUnit.INCH)<3.6)){
 
                 ///left
                 robot.flMotor.setPower(v1);
@@ -77,10 +84,7 @@ public class AutoBlueBrick extends LinearOpMode {
             robot.brMotor.setPower(0);
 
             TimeUnit.MILLISECONDS.sleep(1000);
-            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(.15), robot.getHeading());
 
-
-            TimeUnit.MILLISECONDS.sleep(1000);
 
 
             while (!(colorSensor.red() + colorSensor.blue() + colorSensor.green() < 425)){
@@ -97,8 +101,16 @@ public class AutoBlueBrick extends LinearOpMode {
 
 
             //robot goes back to knock the other bricks out of the way to be in front of the skystone
-            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-1.1), robot.getHeading());  // .55 is the length of the front of the robot
-            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-.6), robot.getHeading());  //TODO find a proper distance
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-.6), robot.getHeading());  // .55 is the length of the front of the robot
+            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-.6), robot.getHeading());
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(.2), robot.getHeading());
+
+            //close feeder
+            feederWide = -0.5;
+            robot.mfeedMotor.setPower(feederWide);
+            TimeUnit.MILLISECONDS.sleep(1000);
+            feederWide = 0;
+            robot.mfeedMotor.setPower(feederWide);
 
 
 

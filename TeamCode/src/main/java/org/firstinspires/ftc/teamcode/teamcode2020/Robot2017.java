@@ -5,6 +5,7 @@ import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
@@ -26,6 +27,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.TouchSensor;
+import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
+
 
 /**
  * This is NOT an opmode.
@@ -40,6 +43,7 @@ public class Robot2017 {
     public DcMotor brMotor;
 
     public ColorSensor colorSensor;
+    public OpticalDistanceSensor distanceSensor;
     public TouchSensor touchSensor;
 
 
@@ -109,6 +113,7 @@ public class Robot2017 {
         rfeedMotor = hwMap.dcMotor.get("rfeedmotor");
         mfeedMotor = hwMap.dcMotor.get("mfeedmotor");
         colorSensor = hwMap.colorSensor.get("colorSensor");
+        distanceSensor = hwMap.opticalDistanceSensor.get("colorSensor");
         touchSensor = hwMap.touchSensor.get("touchSensor");
 
         imu = hwMap.get(BNO055IMU.class, "imu");
