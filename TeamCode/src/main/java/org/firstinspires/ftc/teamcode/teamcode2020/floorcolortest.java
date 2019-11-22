@@ -25,9 +25,9 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 
-@TeleOp(name = "testdoc", group = "auto")
+@TeleOp(name = "floorcolortest", group = "auto")
 //originally had it as TeleOp b/c Autonomous wasn't working, but changed back over
-public class testdoc extends LinearOpMode {
+public class floorcolortest extends LinearOpMode {
     private Robot2017 robot;
     private ElapsedTime runtime = new ElapsedTime();
     private ColorSensor colorSensor;
@@ -64,7 +64,10 @@ public class testdoc extends LinearOpMode {
 
             robot.composeIMUTelemetry();
 
-            telemetry.addData("dist", distanceSensor.getDistance(DistanceUnit.INCH));
+            telemetry.addData("red:", colorSensor.red());
+            telemetry.addData("green:", colorSensor.green());
+            telemetry.addData("blue:", colorSensor.blue());
+
 
             telemetry.update();
 
