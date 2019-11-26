@@ -31,9 +31,9 @@ public class floorcolortest extends LinearOpMode {
     private Robot2017 robot;
     private ElapsedTime runtime = new ElapsedTime();
     private ColorSensor colorSensor;
+    private ColorSensor floorColorSensor;
     private TouchSensor touchSensor;
     private DistanceSensor distanceSensor;
-
 
     public void runOpMode() throws InterruptedException {
         robot = new Robot2017();
@@ -43,6 +43,7 @@ public class floorcolortest extends LinearOpMode {
         touchSensor = hardwareMap.touchSensor.get("touchSensor");
         colorSensor = hardwareMap.get(ColorSensor.class, "colorSensor");
         distanceSensor = hardwareMap.get(DistanceSensor.class, "colorSensor");
+        floorColorSensor = hardwareMap.get(ColorSensor.class, "floorColorSensor");
 
         double distTravelled = 2.0;
         double feederPow = 0;
@@ -60,16 +61,19 @@ public class floorcolortest extends LinearOpMode {
         while (opModeIsActive()) {
 
             Color.RGBToHSV((int)(colorSensor.red() * SCALE_FACTOR), (int) (colorSensor.green() * SCALE_FACTOR), (int) (colorSensor.blue() * SCALE_FACTOR), hsvValues);
-
+            Color.RGBToHSV((int)(floorColorSensor.red() * SCALE_FACTOR), (int) (floorColorSensor.green() * SCALE_FACTOR), (int) (floorColorSensor.blue() * SCALE_FACTOR), hsvValues);
 
             robot.composeIMUTelemetry();
 
-            telemetry.addData("red:", colorSensor.red());
-            telemetry.addData("green:", colorSensor.green());
-            telemetry.addData("blue:", colorSensor.blue());
+            telemetry.addData("red:", floorColorSensor.red());
+            telemetry.addData("green:", floorColorSensor.green());
+            telemetry.addData("blue:", floorColorSensor.blue());
 
 
             telemetry.update();
+
+            //for blue do blue>40
+            //for red, red>60
 
 
         }

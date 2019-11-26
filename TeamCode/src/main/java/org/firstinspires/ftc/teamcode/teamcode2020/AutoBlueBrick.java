@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.teamcode2020;
 
 /**
- * Created by 22tjiang on 9/13/19.
+ * Created by theCoolestKidEver on 9/13/19.
  */
 
 import android.graphics.Color;
@@ -43,7 +43,7 @@ public class AutoBlueBrick extends LinearOpMode {
         touchSensor = hardwareMap.touchSensor.get("touchSensor");
         colorSensor = hardwareMap.get(ColorSensor.class, "colorSensor");
         distanceSensor = hardwareMap.get(DistanceSensor.class, "colorSensor");
-        floorColorSensor = hardwareMap.get(ColorSensor.class, "colorSensor");
+        floorColorSensor = hardwareMap.get(ColorSensor.class, "floorColorSensor");
 
         double distTravelled = 2.0;
         double feederPow = 0;
@@ -126,7 +126,6 @@ public class AutoBlueBrick extends LinearOpMode {
 
             //while block not in feeder, feed
             while (touchSensor.getValue() != 1) {
-                robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(.3), robot.getHeading());
                 feederPow = .5;
                 robot.rfeedMotor.setPower(-feederPow);
                 robot.lfeedMotor.setPower(feederPow);
@@ -140,6 +139,21 @@ public class AutoBlueBrick extends LinearOpMode {
             robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(1.3), robot.getHeading());
 
 
+
+            while (floorColorSensor.blue()<1300){
+                ///backward
+                robot.flMotor.setPower(v1/1.2);
+                robot.frMotor.setPower(v1/1.2);
+                robot.blMotor.setPower(v1/1.2);
+                robot.brMotor.setPower(v1/1.2);
+            }
+
+            robot.flMotor.setPower(0);
+            robot.frMotor.setPower(0);
+            robot.blMotor.setPower(0);
+            robot.brMotor.setPower(0);
+
+            
 
 
 
