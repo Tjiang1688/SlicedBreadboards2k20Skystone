@@ -25,9 +25,9 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 
-@TeleOp(name = "AutoBlueBrick", group = "auto")
+@TeleOp(name = "AutoBlueBrickMoved", group = "auto")
 //originally had it as TeleOp b/c Autonomous wasn't working, but changed back over
-public class AutoBlueBrick extends LinearOpMode {
+public class AutoBlueBrickMoved extends LinearOpMode {
     private Robot2017 robot;
     private ElapsedTime runtime = new ElapsedTime();
     private ColorSensor colorSensor;
@@ -40,6 +40,8 @@ public class AutoBlueBrick extends LinearOpMode {
         robot.init(hardwareMap);
         robot.setTelemetry(telemetry);
         robot.setTime(runtime);
+
+        //nameOfThingInCode = hardwareMap.typeOfThing.get("nameOfThingInConfiguration");
         touchSensor = hardwareMap.touchSensor.get("touchSensor");
         colorSensor = hardwareMap.get(ColorSensor.class, "colorSensor");
         distanceSensor = hardwareMap.get(DistanceSensor.class, "colorSensor");
@@ -56,6 +58,8 @@ public class AutoBlueBrick extends LinearOpMode {
 
 
         //inputGameConfig();
+
+        //MAKE SURE FEEDER IS IN CLOSED POSITION BEFORE START
 
 
         //Wait for the match to begin, presses start button
@@ -77,11 +81,11 @@ public class AutoBlueBrick extends LinearOpMode {
                 robot.blMotor.setPower(-v1);
                 robot.brMotor.setPower(v1);
             }
-
             robot.flMotor.setPower(0);
             robot.frMotor.setPower(0);
             robot.blMotor.setPower(0);
             robot.brMotor.setPower(0);
+
 
             TimeUnit.MILLISECONDS.sleep(1000);
 
@@ -94,27 +98,36 @@ public class AutoBlueBrick extends LinearOpMode {
                 robot.blMotor.setPower(-v1);
                 robot.brMotor.setPower(-v1);
             }
-
             robot.flMotor.setPower(0);
             robot.frMotor.setPower(0);
             robot.blMotor.setPower(0);
             robot.brMotor.setPower(0);
 
 
+
             //robot goes back to knock the other bricks out of the way to be in front of the skystone
             robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-.75), robot.getHeading());  // .55 is the length of the front of the robot
+
+
 
             //SLIIIIIIIDE to the left
             robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-.6), robot.getHeading());
 
+
+
+            //open feeder
             feederWide = 0.5;
             robot.mfeedMotor.setPower(feederWide);
             TimeUnit.MILLISECONDS.sleep(900);
             feederWide = 0;
             robot.mfeedMotor.setPower(feederWide);
 
+
+
             //move forward to block
             robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(.45), robot.getHeading());
+
+
 
             //close feeder
             feederWide = -0.5;
@@ -124,73 +137,60 @@ public class AutoBlueBrick extends LinearOpMode {
             robot.mfeedMotor.setPower(feederWide);
 
 
+
             //while block not in feeder, feed
             while (touchSensor.getValue() != 1) {
                 feederPow = .5;
                 robot.rfeedMotor.setPower(-feederPow);
                 robot.lfeedMotor.setPower(feederPow);
             }
-
             feederPow = 0;
             robot.rfeedMotor.setPower(-feederPow);
             robot.lfeedMotor.setPower(feederPow);
 
 
-            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(1.3), robot.getHeading());
+            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(.8), robot.getHeading());
 
 
-
-            while (floorColorSensor.blue()<1300){
+            //go back until blue line
+            while (floorColorSensor.blue()<250){
                 ///backward
-                robot.flMotor.setPower(v1/1.2);
-                robot.frMotor.setPower(v1/1.2);
-                robot.blMotor.setPower(v1/1.2);
-                robot.brMotor.setPower(v1/1.2);
+                robot.flMotor.setPower(v1);
+                robot.frMotor.setPower(v1*1.1);
+                robot.blMotor.setPower(v1*1.1);
+                robot.brMotor.setPower(v1);
             }
-
             robot.flMotor.setPower(0);
             robot.frMotor.setPower(0);
             robot.blMotor.setPower(0);
             robot.brMotor.setPower(0);
 
-            
+            TimeUnit.MILLISECONDS.sleep(1000);
+
+
+            //from middle blue line, move back towards platform
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-2.3), 0);
+
+
+            //turn to platform on right (already moved by alliance partner)
+            robot.gyrodrive.turn(0.7, -90);
 
 
 
-            /*
+            //open feeder to let go of block
+            feederWide = 0.5;
+            robot.mfeedMotor.setPower(feederWide);
+            TimeUnit.MILLISECONDS.sleep(900);
+            feederWide = 0;
+            robot.mfeedMotor.setPower(feederWide);
 
-            robot.gyrodrive.vertical(-0.7, Convert.tileToYeetGV(.5), robot.getHeading());
-            robot.gyrodrive.turn(0.7, -180);
 
-            if (colorSensor.red() + colorSensor.blue() + colorSensor.green() > 525) {
-                feederPow = -.5;
-                robot.rfeedMotor.setPower(-feederPow);
-                robot.lfeedMotor.setPower(feederPow);
-                wait(2000);
-                feederPow = .5;
-                robot.gyrodrive.turn(0.7, -90);
-                robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(1), robot.getHeading());
-                stoneCount += 1;
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-.6), robot.getHeading());
 
-            }else{
-                skystone = true;
-                feederPow = 0;
-            }
+            ///move back to blue line
+            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-2.3), robot.getHeading());
 
-            robot.rfeedMotor.setPower(-feederPow);
-            robot.lfeedMotor.setPower(feederPow);
-
-            telemetry.update();
-
-             */
             break;
-
-
-
         }
-
-
-
-
     }
 }
