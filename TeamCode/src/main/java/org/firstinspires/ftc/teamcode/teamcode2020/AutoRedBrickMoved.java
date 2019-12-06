@@ -106,7 +106,7 @@ public class AutoRedBrickMoved extends LinearOpMode {
 
 
             //robot goes back to knock the other bricks out of the way to be in front of the skystone
-            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-.75), robot.getHeading());  // .55 is the length of the front of the robot
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-1.05), robot.getHeading());  // .55 is the length of the front of the robot
 
 
 
@@ -153,7 +153,7 @@ public class AutoRedBrickMoved extends LinearOpMode {
 
 
             //go forwards until red line
-            while (floorColorSensor.red()<250){
+            while (floorColorSensor.red()<55){
                 ///backward
                 robot.flMotor.setPower(-v1);
                 robot.frMotor.setPower(-v1*1.1);
