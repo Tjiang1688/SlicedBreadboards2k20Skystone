@@ -25,9 +25,9 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 
-@TeleOp(name = "AutoBlueBrickMoved", group = "auto")
+@TeleOp(name = "AutoBlueBrickAll", group = "auto")
 //originally had it as TeleOp b/c Autonomous wasn't working, but changed back over
-public class AutoBlueBrickMoved extends LinearOpMode {
+public class AutoBlueBrickAll extends LinearOpMode {
     private Robot2017 robot;
     private ElapsedTime runtime = new ElapsedTime();
     private ColorSensor colorSensor;
@@ -172,9 +172,8 @@ public class AutoBlueBrickMoved extends LinearOpMode {
             robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-2.3), 0);
 
 
-            //turn to platform on right (already moved by alliance partner)
-            robot.gyrodrive.turn(0.7, -90);
 
+            //////////////////////////////////////YO TIANA MOVE PLATFORM HERE
 
 
             //open feeder to let go of block
