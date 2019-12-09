@@ -91,7 +91,7 @@ public class AutoBlueBrickAll extends LinearOpMode {
 
 
             //while not skystone, move forwards
-            while (!(colorSensor.red() + colorSensor.blue() + colorSensor.green() < 600)){
+            while (!(colorSensor.red() + colorSensor.blue() + colorSensor.green() < 300)){
                 ///forward
                 robot.flMotor.setPower(-v1);
                 robot.frMotor.setPower(-v1);
@@ -153,7 +153,7 @@ public class AutoBlueBrickAll extends LinearOpMode {
 
 
             //go back until blue line
-            while (floorColorSensor.blue()<250){
+            while (floorColorSensor.blue()<1050){
                 ///backward
                 robot.flMotor.setPower(v1);
                 robot.frMotor.setPower(v1*1.1);
@@ -172,8 +172,9 @@ public class AutoBlueBrickAll extends LinearOpMode {
             robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-2.3), 0);
 
 
-
-            //////////////////////////////////////YO TIANA MOVE PLATFORM HERE
+            //turn to platform on right (already moved by alliance partner)
+            robot.gyrodrive.turn(0.7, -90);
+            //////////////////////////////////////YO TIANA MOVE PLATFORM HERE and take out above
 
 
             //open feeder to let go of block

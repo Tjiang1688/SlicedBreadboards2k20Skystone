@@ -91,7 +91,7 @@ public class AutoBlueBrickMoved extends LinearOpMode {
 
 
             //while not skystone, move forwards
-            while (!(colorSensor.red() + colorSensor.blue() + colorSensor.green() < 600)){
+            while (!(colorSensor.red() + colorSensor.blue() + colorSensor.green() < 10)){
                 ///forward
                 robot.flMotor.setPower(-v1);
                 robot.frMotor.setPower(-v1);
