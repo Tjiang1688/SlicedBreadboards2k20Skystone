@@ -91,7 +91,7 @@ public class AutoBlueBrickAll extends LinearOpMode {
 
 
             //while not skystone, move forwards
-            while (!(colorSensor.red() + colorSensor.blue() + colorSensor.green() < 300)){
+            while (!(colorSensor.red() + colorSensor.blue() + colorSensor.green() < 400)){
                 ///forward
                 robot.flMotor.setPower(-v1);
                 robot.frMotor.setPower(-v1);
@@ -153,11 +153,11 @@ public class AutoBlueBrickAll extends LinearOpMode {
 
 
             //go back until blue line
-            while (floorColorSensor.blue()<1050){
+            while (floorColorSensor.blue()<1000){
                 ///backward
                 robot.flMotor.setPower(v1);
-                robot.frMotor.setPower(v1*1.1);
-                robot.blMotor.setPower(v1*1.1);
+                robot.frMotor.setPower(v1);
+                robot.blMotor.setPower(v1);
                 robot.brMotor.setPower(v1);
             }
             robot.flMotor.setPower(0);
@@ -169,12 +169,19 @@ public class AutoBlueBrickAll extends LinearOpMode {
 
 
             //from middle blue line, move back towards platform
-            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-2.3), 0);
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-2.8), 0);
 
 
             //turn to platform on right (already moved by alliance partner)
-            robot.gyrodrive.turn(0.7, -90);
-            //////////////////////////////////////YO TIANA MOVE PLATFORM HERE and take out above
+            robot.gyrodrive.turn(0.7, 90);
+
+
+
+
+
+            //////////////////////////////////////YO TIANA move to platform here
+
+
 
 
             //open feeder to let go of block
@@ -184,11 +191,19 @@ public class AutoBlueBrickAll extends LinearOpMode {
             feederWide = 0;
             robot.mfeedMotor.setPower(feederWide);
 
+            //after drop off block, come out, go around block, and go back to platform
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-.4), robot.getHeading());
+            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(.6), robot.getHeading());
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(.4), robot.getHeading());
 
-            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-.6), robot.getHeading());
+
+            ///////////////////////////// YO TIANA servo down for platform here
+
+
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-1.4), robot.getHeading());
 
             ///move back to blue line
-            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-2.3), robot.getHeading());
+            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(1.9), robot.getHeading());
 
             break;
         }
