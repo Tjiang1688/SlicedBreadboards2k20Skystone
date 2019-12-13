@@ -25,9 +25,9 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 
-@TeleOp(name = "AutoBlueBrickMoved", group = "auto")
+@TeleOp(name = "redAreWeGettingAnotherColorSensor", group = "auto")
 //originally had it as TeleOp b/c Autonomous wasn't working, but changed back over
-public class AutoBlueBrickMoved extends LinearOpMode {
+public class redAreWeGettingAnotherColorSensor extends LinearOpMode {
     private Robot2017 robot;
     private ElapsedTime runtime = new ElapsedTime();
     private ColorSensor colorSensor;
@@ -43,9 +43,13 @@ public class AutoBlueBrickMoved extends LinearOpMode {
 
         //nameOfThingInCode = hardwareMap.typeOfThing.get("nameOfThingInConfiguration");
         touchSensor = hardwareMap.touchSensor.get("touchSensor");
-        colorSensor = hardwareMap.get(ColorSensor.class, "colorSensor");
-        distanceSensor = hardwareMap.get(DistanceSensor.class, "colorSensor");
+
         floorColorSensor = hardwareMap.get(ColorSensor.class, "floorColorSensor");
+
+        //COLOR SENSOR ON THE RIGHT SIDE Y'ALL
+        //R IS FOR RED and R IS FOR RIGHT SIDE
+        colorSensor = hardwareMap.get(ColorSensor.class, "colorSensorRight");
+        distanceSensor = hardwareMap.get(DistanceSensor.class, "colorSensorRight");
 
         double distTravelled = 2.0;
         double feederPow = 0;
@@ -75,11 +79,11 @@ public class AutoBlueBrickMoved extends LinearOpMode {
             //robot starts parallel to wall and moves horizontal to be next to and parallel to the bricks
             //while too far away, move closer
             while (!(distanceSensor.getDistance(DistanceUnit.INCH)<3.6)){
-                ///left
-                robot.flMotor.setPower(v1);
-                robot.frMotor.setPower(-v1);
-                robot.blMotor.setPower(-v1);
-                robot.brMotor.setPower(v1);
+                ///right
+                robot.flMotor.setPower(-v1);
+                robot.frMotor.setPower(v1);
+                robot.blMotor.setPower(v1);
+                robot.brMotor.setPower(-v1);
             }
             robot.flMotor.setPower(0);
             robot.frMotor.setPower(0);
@@ -91,7 +95,7 @@ public class AutoBlueBrickMoved extends LinearOpMode {
 
 
             //while not skystone, move forwards
-            while (!(colorSensor.red() + colorSensor.blue() + colorSensor.green() < 700)){
+            while (!(colorSensor.red() + colorSensor.blue() + colorSensor.green() < 300)){
                 ///forward
                 robot.flMotor.setPower(-v1);
                 robot.frMotor.setPower(-v1);
@@ -110,8 +114,8 @@ public class AutoBlueBrickMoved extends LinearOpMode {
 
 
 
-            //SLIIIIIIIDE to the left
-            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-.6), robot.getHeading());
+            //SLIIIIIIIDE to the right
+            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(.6), robot.getHeading());
 
 
 
@@ -149,11 +153,11 @@ public class AutoBlueBrickMoved extends LinearOpMode {
             robot.lfeedMotor.setPower(feederPow);
 
 
-            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(.8), robot.getHeading());
+            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-.8), robot.getHeading());
 
 
-            //go back until blue line
-            while (floorColorSensor.blue()<1000){
+            //go back until red line
+            while (floorColorSensor.red()<1000){  /////////////TODO FIND A VALUE FOR THE RED
                 ///backward
                 robot.flMotor.setPower(v1);
                 robot.frMotor.setPower(v1);
@@ -173,7 +177,7 @@ public class AutoBlueBrickMoved extends LinearOpMode {
 
 
             //turn to platform on right (already moved by alliance partner)
-            robot.gyrodrive.turn(0.7, -90);
+            robot.gyrodrive.turn(0.7, 90);
 
 
             //////////////////////////////////////////////////////YO TIANA pulley up to raise block here
@@ -190,7 +194,7 @@ public class AutoBlueBrickMoved extends LinearOpMode {
             robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-.6), robot.getHeading());
 
             ///move back to blue line
-            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-2.3), robot.getHeading());
+            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(2.3), robot.getHeading());
 
             break;
         }

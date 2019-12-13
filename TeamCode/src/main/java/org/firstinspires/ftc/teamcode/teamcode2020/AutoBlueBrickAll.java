@@ -57,20 +57,21 @@ public class AutoBlueBrickAll extends LinearOpMode {
         double v1 = .4;
 
 
-        //inputGameConfig();
-
         //MAKE SURE FEEDER IS IN CLOSED POSITION BEFORE START
 
+        //inputGameConfig();
 
-        //Wait for the match to begin, presses start button
+        //Wait for the match to begin, press start button
         waitForStart();
         robot.imu.startAccelerationIntegration(new Position(), new Velocity(), 1000);
         while (opModeIsActive()) {
 
+            //color sensor scale factors
             Color.RGBToHSV((int)(colorSensor.red() * SCALE_FACTOR), (int) (colorSensor.green() * SCALE_FACTOR), (int) (colorSensor.blue() * SCALE_FACTOR), hsvValues);
             Color.RGBToHSV((int)(floorColorSensor.red() * SCALE_FACTOR), (int) (floorColorSensor.green() * SCALE_FACTOR), (int) (floorColorSensor.blue() * SCALE_FACTOR), hsvValues);
 
             robot.composeIMUTelemetry();
+
 
             //robot starts parallel to wall and moves horizontal to be next to and parallel to the bricks
             //while too far away, move closer
@@ -87,11 +88,11 @@ public class AutoBlueBrickAll extends LinearOpMode {
             robot.brMotor.setPower(0);
 
 
-            TimeUnit.MILLISECONDS.sleep(1000);
+            TimeUnit.MILLISECONDS.sleep(800);
 
 
             //while not skystone, move forwards
-            while (!(colorSensor.red() + colorSensor.blue() + colorSensor.green() < 400)){
+            while (!(colorSensor.red() + colorSensor.blue() + colorSensor.green() < 700)){
                 ///forward
                 robot.flMotor.setPower(-v1);
                 robot.frMotor.setPower(-v1);
@@ -149,6 +150,7 @@ public class AutoBlueBrickAll extends LinearOpMode {
             robot.lfeedMotor.setPower(feederPow);
 
 
+
             robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(.8), robot.getHeading());
 
 
@@ -172,16 +174,12 @@ public class AutoBlueBrickAll extends LinearOpMode {
             robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-2.8), 0);
 
 
-            //turn to platform on right (already moved by alliance partner)
+            //turn to platform on left (not moved by alliance partner)
             robot.gyrodrive.turn(0.7, 90);
 
 
-
-
-
-            //////////////////////////////////////YO TIANA move to platform here
-
-
+            ////////////////////////////// TODO YO TIANA move forward to platform
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(.3), robot.getHeading());
 
 
             //open feeder to let go of block
@@ -191,19 +189,35 @@ public class AutoBlueBrickAll extends LinearOpMode {
             feederWide = 0;
             robot.mfeedMotor.setPower(feederWide);
 
+
             //after drop off block, come out, go around block, and go back to platform
             robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-.4), robot.getHeading());
             robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(.6), robot.getHeading());
             robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(.4), robot.getHeading());
 
 
-            ///////////////////////////// YO TIANA servo down for platform here
+            ///////////////////////////// TODO YO TIANA servo down for platform here
 
-
+            //drag platform back
             robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-1.4), robot.getHeading());
 
-            ///move back to blue line
-            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(1.9), robot.getHeading());
+
+            //make sure facing correct direction
+            robot.gyrodrive.turn(0.7, 90);
+
+
+            ///move right to blue line
+            while (floorColorSensor.blue()<1000){
+                ///right
+                robot.flMotor.setPower(-v1);
+                robot.frMotor.setPower(v1);
+                robot.blMotor.setPower(v1);
+                robot.brMotor.setPower(-v1);
+            }
+            robot.flMotor.setPower(0);
+            robot.frMotor.setPower(0);
+            robot.blMotor.setPower(0);
+            robot.brMotor.setPower(0);
 
             break;
         }
