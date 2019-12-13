@@ -89,6 +89,7 @@ public class AutoBlueBrickAll extends LinearOpMode {
 
 
             TimeUnit.MILLISECONDS.sleep(800);
+            robot.gyrodrive.turn(0.7, -5);
 
 
             //while not skystone, move forwards
@@ -119,7 +120,7 @@ public class AutoBlueBrickAll extends LinearOpMode {
             //open feeder
             feederWide = 0.5;
             robot.mfeedMotor.setPower(feederWide);
-            TimeUnit.MILLISECONDS.sleep(900);
+            TimeUnit.MILLISECONDS.sleep(1300);
             feederWide = 0;
             robot.mfeedMotor.setPower(feederWide);
 
@@ -133,7 +134,7 @@ public class AutoBlueBrickAll extends LinearOpMode {
             //close feeder
             feederWide = -0.5;
             robot.mfeedMotor.setPower(feederWide);
-            TimeUnit.MILLISECONDS.sleep(900);
+            TimeUnit.MILLISECONDS.sleep(1000);
             feederWide = 0;
             robot.mfeedMotor.setPower(feederWide);
 
@@ -179,7 +180,7 @@ public class AutoBlueBrickAll extends LinearOpMode {
 
 
             ////////////////////////////// TODO YO TIANA move forward to platform
-            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(.3), robot.getHeading());
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(.9), robot.getHeading());
 
 
             //open feeder to let go of block
@@ -197,6 +198,8 @@ public class AutoBlueBrickAll extends LinearOpMode {
 
 
             ///////////////////////////// TODO YO TIANA servo down for platform here
+
+            TimeUnit.MILLISECONDS.sleep(1000);
 
             //drag platform back
             robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-1.4), robot.getHeading());
