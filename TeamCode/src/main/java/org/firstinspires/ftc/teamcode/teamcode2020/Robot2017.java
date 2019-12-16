@@ -62,6 +62,9 @@ public class Robot2017 {
     public DcMotor rfeedMotor;
     public DcMotor mfeedMotor;
 
+    //Lift motor
+    public DcMotor liftMotor;
+
     /////////////////////////////////////////////////////////////////////// YO TIANA DO SMTH WITH THE TOUCH SENSOR FOR THE BLOCKS
 
     //FTC Set-Up
@@ -112,6 +115,7 @@ public class Robot2017 {
         lfeedMotor = hwMap.dcMotor.get("lfeedmotor");
         rfeedMotor = hwMap.dcMotor.get("rfeedmotor");
         mfeedMotor = hwMap.dcMotor.get("mfeedmotor");
+        liftMotor = hwMap.dcMotor.get("liftmotor");
         colorSensor = hwMap.colorSensor.get("colorSensor");
         distanceSensor = hwMap.opticalDistanceSensor.get("colorSensor");
         touchSensor = hwMap.touchSensor.get("touchSensor");
@@ -249,6 +253,7 @@ public class Robot2017 {
             lfeedMotor.setPower(0);
             rfeedMotor.setPower(0);
             mfeedMotor.setPower(0);
+            liftMotor.setPower(0);
             resetMotors();
         }
 
