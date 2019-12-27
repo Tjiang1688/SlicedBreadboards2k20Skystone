@@ -65,6 +65,9 @@ public class Robot2017 {
     //Lift motor
     public DcMotor liftMotor;
 
+    public Servo lServo;
+    public Servo rServo;
+
     /////////////////////////////////////////////////////////////////////// YO TIANA DO SMTH WITH THE TOUCH SENSOR FOR THE BLOCKS
 
     //FTC Set-Up
@@ -119,6 +122,8 @@ public class Robot2017 {
         colorSensor = hwMap.colorSensor.get("colorSensor");
         distanceSensor = hwMap.opticalDistanceSensor.get("colorSensor");
         touchSensor = hwMap.touchSensor.get("touchSensor");
+        lServo = hwMap.servo.get("lServo");
+        rServo = hwMap.servo.get("rServo");
 
         imu = hwMap.get(BNO055IMU.class, "imu");
     }
@@ -130,6 +135,12 @@ public class Robot2017 {
 
 
     public double getHeading(){ return imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle; }
+
+    //////////////////////////////////////////////////////////////////////////////TODO find proper positions for up and down servo
+
+    public void servoDown(){ lServo.setPosition(.487f); rServo.setPosition(.487f); }
+
+    public void servoUp(){ lServo.setPosition(.637f); rServo.setPosition(.637f); }
 
 
     /*

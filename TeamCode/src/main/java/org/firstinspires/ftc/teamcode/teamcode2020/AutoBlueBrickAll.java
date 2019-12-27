@@ -23,6 +23,7 @@ import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import com.qualcomm.robotcore.hardware.Servo;
 
 
 @TeleOp(name = "AutoBlueBrickAll", group = "auto")
@@ -34,6 +35,7 @@ public class AutoBlueBrickAll extends LinearOpMode {
     private ColorSensor floorColorSensor;
     private TouchSensor touchSensor;
     private DistanceSensor distanceSensor;
+
 
     public void runOpMode() throws InterruptedException {
         robot = new Robot2017();
@@ -47,9 +49,12 @@ public class AutoBlueBrickAll extends LinearOpMode {
         distanceSensor = hardwareMap.get(DistanceSensor.class, "colorSensor");
         floorColorSensor = hardwareMap.get(ColorSensor.class, "floorColorSensor");
 
+
         double distTravelled = 2.0;
         double feederPow = 0;
         double feederWide = 0;
+        ///////////////TODO before competition change floorBlue and close feeder
+        int floorBlue = 600;
         final double SCALE_FACTOR = 255;
         float hsvValues[] = {0F, 0F, 0F};
         boolean skystone = false;
@@ -88,8 +93,9 @@ public class AutoBlueBrickAll extends LinearOpMode {
             robot.brMotor.setPower(0);
 
 
-            TimeUnit.MILLISECONDS.sleep(800);
-            robot.gyrodrive.turn(0.7, -5);
+            TimeUnit.MILLISECONDS.sleep(1000);
+
+            robot.gyrodrive.turn(0.7, 0);
 
 
             //while not skystone, move forwards
@@ -113,16 +119,16 @@ public class AutoBlueBrickAll extends LinearOpMode {
 
 
             //SLIIIIIIIDE to the left
-            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-.6), robot.getHeading());
+            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-.55), robot.getHeading());
 
 
 
             //open feeder
+            //negative is open
             feederWide = 0.5;
-            robot.mfeedMotor.setPower(feederWide);
-            TimeUnit.MILLISECONDS.sleep(1300);
-            feederWide = 0;
-            robot.mfeedMotor.setPower(feederWide);
+            robot.mfeedMotor.setPower(-feederWide);
+            TimeUnit.MILLISECONDS.sleep(1000);
+            robot.mfeedMotor.setPower(0);
 
 
 
@@ -132,11 +138,9 @@ public class AutoBlueBrickAll extends LinearOpMode {
 
 
             //close feeder
-            feederWide = -0.5;
             robot.mfeedMotor.setPower(feederWide);
-            TimeUnit.MILLISECONDS.sleep(1000);
-            feederWide = 0;
-            robot.mfeedMotor.setPower(feederWide);
+            TimeUnit.MILLISECONDS.sleep(900);
+            robot.mfeedMotor.setPower(0);
 
 
 
@@ -146,17 +150,18 @@ public class AutoBlueBrickAll extends LinearOpMode {
                 robot.rfeedMotor.setPower(-feederPow);
                 robot.lfeedMotor.setPower(feederPow);
             }
-            feederPow = 0;
-            robot.rfeedMotor.setPower(-feederPow);
-            robot.lfeedMotor.setPower(feederPow);
+            robot.rfeedMotor.setPower(0);
+            robot.lfeedMotor.setPower(0);
 
 
+            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(.9), robot.getHeading());
 
-            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(.8), robot.getHeading());
+            ////////////////// TODO comment out below and use touch sensor on back instead?
+
 
 
             //go back until blue line
-            while (floorColorSensor.blue()<1000){
+            while (floorColorSensor.blue()<floorBlue){
                 ///backward
                 robot.flMotor.setPower(v1);
                 robot.frMotor.setPower(v1);
@@ -179,16 +184,22 @@ public class AutoBlueBrickAll extends LinearOpMode {
             robot.gyrodrive.turn(0.7, 90);
 
 
-            ////////////////////////////// TODO YO TIANA move forward to platform
-            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(.9), robot.getHeading());
+
+            //lift block over platform
+            //so apparently negative is up
+            robot.liftMotor.setPower(-.8);
+            TimeUnit.MILLISECONDS.sleep(900);
+            robot.liftMotor.setPower(0);
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(.2), 0);
+            robot.liftMotor.setPower(.2);
+            TimeUnit.MILLISECONDS.sleep(500);
+            robot.liftMotor.setPower(0);
 
 
             //open feeder to let go of block
-            feederWide = 0.5;
-            robot.mfeedMotor.setPower(feederWide);
+            robot.mfeedMotor.setPower(-feederWide);
             TimeUnit.MILLISECONDS.sleep(900);
-            feederWide = 0;
-            robot.mfeedMotor.setPower(feederWide);
+            robot.mfeedMotor.setPower(0);
 
 
             //after drop off block, come out, go around block, and go back to platform
@@ -197,7 +208,9 @@ public class AutoBlueBrickAll extends LinearOpMode {
             robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(.4), robot.getHeading());
 
 
-            ///////////////////////////// TODO YO TIANA servo down for platform here
+            ///////////////////////////// TODO find up down angles
+            robot.servoDown();
+
 
             TimeUnit.MILLISECONDS.sleep(1000);
 
@@ -205,12 +218,16 @@ public class AutoBlueBrickAll extends LinearOpMode {
             robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-1.4), robot.getHeading());
 
 
+            ////////////TODO idk bro
+            robot.servoUp();
+
+
             //make sure facing correct direction
             robot.gyrodrive.turn(0.7, 90);
 
 
             ///move right to blue line
-            while (floorColorSensor.blue()<1000){
+            while (floorColorSensor.blue()<floorBlue){
                 ///right
                 robot.flMotor.setPower(-v1);
                 robot.frMotor.setPower(v1);

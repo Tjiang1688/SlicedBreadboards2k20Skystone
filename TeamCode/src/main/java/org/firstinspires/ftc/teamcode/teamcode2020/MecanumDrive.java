@@ -109,10 +109,11 @@ public class MecanumDrive extends LinearOpMode {
 
 
             if(gamepad2.right_stick_y < 0){
-                robot.liftMotor.setPower(0.5);
-            }
-            if(gamepad2.right_stick_y > 0){
-                robot.liftMotor.setPower(0.5);
+                robot.liftMotor.setPower(-.8);
+            } else if(gamepad2.right_stick_y > 0) {
+                robot.liftMotor.setPower(0.2);
+            } else {
+                robot.liftMotor.setPower(0);
             }
 
 
