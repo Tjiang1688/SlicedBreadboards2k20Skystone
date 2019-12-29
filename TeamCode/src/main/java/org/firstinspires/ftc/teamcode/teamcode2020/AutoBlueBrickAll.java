@@ -214,6 +214,7 @@ public class AutoBlueBrickAll extends LinearOpMode {
 
             TimeUnit.MILLISECONDS.sleep(1000);
 
+
             //drag platform back
             robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-1.4), robot.getHeading());
 
