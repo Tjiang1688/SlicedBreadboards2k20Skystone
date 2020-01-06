@@ -108,6 +108,16 @@ public class MecanumDrive extends LinearOpMode {
             }
 
 
+            //TODO idk what happened here but it seems like these power values are wrong
+            if(gamepad2.right_stick_y < 0){
+                robot.liftMotor.setPower(-.8);
+            } else if(gamepad2.right_stick_y > 0) {
+                robot.liftMotor.setPower(0.2);
+            } else {
+                robot.liftMotor.setPower(0);
+            }
+
+
             robot.rfeedMotor.setPower(feederPow);
             robot.lfeedMotor.setPower(-feederPow);
             robot.mfeedMotor.setPower(feederWide);

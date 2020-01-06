@@ -50,6 +50,7 @@ public class AutoBlueBrickMoved extends LinearOpMode {
         double distTravelled = 2.0;
         double feederPow = 0;
         double feederWide = 0;
+        int floorBlue = 600;
         final double SCALE_FACTOR = 255;
         float hsvValues[] = {0F, 0F, 0F};
         boolean skystone = false;
@@ -89,9 +90,11 @@ public class AutoBlueBrickMoved extends LinearOpMode {
 
             TimeUnit.MILLISECONDS.sleep(1000);
 
+            robot.gyrodrive.turn(0.7, 0);
+
 
             //while not skystone, move forwards
-            while (!(colorSensor.red() + colorSensor.blue() + colorSensor.green() < 600)){
+            while (!(colorSensor.red() + colorSensor.blue() + colorSensor.green() < 700)){
                 ///forward
                 robot.flMotor.setPower(-v1);
                 robot.frMotor.setPower(-v1);
@@ -111,16 +114,15 @@ public class AutoBlueBrickMoved extends LinearOpMode {
 
 
             //SLIIIIIIIDE to the left
-            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-.6), robot.getHeading());
+            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-.55), robot.getHeading());
 
 
 
             //open feeder
             feederWide = 0.5;
-            robot.mfeedMotor.setPower(feederWide);
-            TimeUnit.MILLISECONDS.sleep(900);
-            feederWide = 0;
-            robot.mfeedMotor.setPower(feederWide);
+            robot.mfeedMotor.setPower(-feederWide);
+            TimeUnit.MILLISECONDS.sleep(1000);
+            robot.mfeedMotor.setPower(0);
 
 
 
@@ -130,11 +132,9 @@ public class AutoBlueBrickMoved extends LinearOpMode {
 
 
             //close feeder
-            feederWide = -0.5;
             robot.mfeedMotor.setPower(feederWide);
             TimeUnit.MILLISECONDS.sleep(900);
-            feederWide = 0;
-            robot.mfeedMotor.setPower(feederWide);
+            robot.mfeedMotor.setPower(0);
 
 
 
@@ -144,20 +144,23 @@ public class AutoBlueBrickMoved extends LinearOpMode {
                 robot.rfeedMotor.setPower(-feederPow);
                 robot.lfeedMotor.setPower(feederPow);
             }
-            feederPow = 0;
-            robot.rfeedMotor.setPower(-feederPow);
-            robot.lfeedMotor.setPower(feederPow);
+            robot.rfeedMotor.setPower(0);
+            robot.lfeedMotor.setPower(0);
 
 
-            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(.8), robot.getHeading());
+            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(.9), robot.getHeading());
 
 
             //go back until blue line
+<<<<<<< HEAD
             while (floorColorSensor.blue()<150){
+=======
+            while (floorColorSensor.blue()<floorBlue){
+>>>>>>> 31c4cd14f13534a4cb73ba6db2e979b38d087045
                 ///backward
                 robot.flMotor.setPower(v1);
-                robot.frMotor.setPower(v1*1.1);
-                robot.blMotor.setPower(v1*1.1);
+                robot.frMotor.setPower(v1);
+                robot.blMotor.setPower(v1);
                 robot.brMotor.setPower(v1);
             }
             robot.flMotor.setPower(0);
@@ -169,26 +172,48 @@ public class AutoBlueBrickMoved extends LinearOpMode {
 
 
             //from middle blue line, move back towards platform
-            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-2.3), 0);
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-2.8), 0);
 
 
             //turn to platform on right (already moved by alliance partner)
             robot.gyrodrive.turn(0.7, -90);
 
 
+            //lift block over platform
+            robot.liftMotor.setPower(-.8);
+            TimeUnit.MILLISECONDS.sleep(900);
+            robot.liftMotor.setPower(0);
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(.2), 0);
+            robot.liftMotor.setPower(.2);
+            TimeUnit.MILLISECONDS.sleep(500);
+            robot.liftMotor.setPower(0);
+
+
 
             //open feeder to let go of block
             feederWide = 0.5;
-            robot.mfeedMotor.setPower(feederWide);
+            robot.mfeedMotor.setPower(-feederWide);
             TimeUnit.MILLISECONDS.sleep(900);
             feederWide = 0;
             robot.mfeedMotor.setPower(feederWide);
 
 
-            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-.6), robot.getHeading());
 
-            ///move back to blue line
-            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-2.3), robot.getHeading());
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-.6), -90);
+
+
+            ///move left to blue line
+            while (floorColorSensor.blue()<floorBlue){
+                ///left
+                robot.flMotor.setPower(v1);
+                robot.frMotor.setPower(-v1);
+                robot.blMotor.setPower(-v1);
+                robot.brMotor.setPower(v1);
+            }
+            robot.flMotor.setPower(0);
+            robot.frMotor.setPower(0);
+            robot.blMotor.setPower(0);
+            robot.brMotor.setPower(0);
 
             break;
         }

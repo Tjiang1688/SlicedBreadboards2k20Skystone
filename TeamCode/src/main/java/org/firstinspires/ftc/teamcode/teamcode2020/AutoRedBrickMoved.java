@@ -92,7 +92,7 @@ public class AutoRedBrickMoved extends LinearOpMode {
 
             //while not skystone, move backwards
             while (!(colorSensor.red() + colorSensor.blue() + colorSensor.green() < 600)){
-                ///forward
+                ///backward
                 robot.flMotor.setPower(v1);
                 robot.frMotor.setPower(v1);
                 robot.blMotor.setPower(v1);
@@ -153,11 +153,11 @@ public class AutoRedBrickMoved extends LinearOpMode {
 
 
             //go forwards until red line
-            while (floorColorSensor.red()<55){
-                ///backward
+            while (floorColorSensor.red()<700){
+                ///forwards
                 robot.flMotor.setPower(-v1);
-                robot.frMotor.setPower(-v1*1.1);
-                robot.blMotor.setPower(-v1*1.1);
+                robot.frMotor.setPower(-v1);
+                robot.blMotor.setPower(-v1);
                 robot.brMotor.setPower(-v1);
             }
             robot.flMotor.setPower(0);

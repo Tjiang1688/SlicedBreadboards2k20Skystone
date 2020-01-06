@@ -45,6 +45,7 @@ public class Robot2017 {
     public ColorSensor colorSensor;
     public OpticalDistanceSensor distanceSensor;
     public TouchSensor touchSensor;
+    public TouchSensor servoTouchSensor;
 
 
     public BNO055IMU imu;
@@ -61,6 +62,12 @@ public class Robot2017 {
     public DcMotor lfeedMotor;
     public DcMotor rfeedMotor;
     public DcMotor mfeedMotor;
+
+    //Lift motor
+    public DcMotor liftMotor;
+
+    public Servo lServo;
+    public Servo rServo;
 
     /////////////////////////////////////////////////////////////////////// YO TIANA DO SMTH WITH THE TOUCH SENSOR FOR THE BLOCKS
 
@@ -112,9 +119,13 @@ public class Robot2017 {
         lfeedMotor = hwMap.dcMotor.get("lfeedmotor");
         rfeedMotor = hwMap.dcMotor.get("rfeedmotor");
         mfeedMotor = hwMap.dcMotor.get("mfeedmotor");
+        liftMotor = hwMap.dcMotor.get("liftmotor");
         colorSensor = hwMap.colorSensor.get("colorSensor");
         distanceSensor = hwMap.opticalDistanceSensor.get("colorSensor");
         touchSensor = hwMap.touchSensor.get("touchSensor");
+        servoTouchSensor = hwMap.touchSensor.get("servoTouchSensor");
+        lServo = hwMap.servo.get("lServo");
+        rServo = hwMap.servo.get("rServo");
 
         imu = hwMap.get(BNO055IMU.class, "imu");
     }
@@ -126,6 +137,12 @@ public class Robot2017 {
 
 
     public double getHeading(){ return imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle; }
+
+    //////////////////////////////////////////////////////////////////////////////TODO find proper positions for up and down servo
+
+    public void servoDown(){ lServo.setPosition(.487f); rServo.setPosition(.487f); }
+
+    public void servoUp(){ lServo.setPosition(.637f); rServo.setPosition(.637f); }
 
 
     /*
@@ -249,6 +266,7 @@ public class Robot2017 {
             lfeedMotor.setPower(0);
             rfeedMotor.setPower(0);
             mfeedMotor.setPower(0);
+            liftMotor.setPower(0);
             resetMotors();
         }
 
