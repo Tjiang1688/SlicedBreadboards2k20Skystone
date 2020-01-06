@@ -35,6 +35,14 @@ public class AutoBlueBrickAll extends LinearOpMode {
     private ColorSensor floorColorSensor;
     private TouchSensor touchSensor;
     private DistanceSensor distanceSensor;
+    private Servo lServo;
+    private Servo rServo;
+
+
+    //TODO find values for up and down servo
+    public void servoDown(){ lServo.setPosition(.487f); rServo.setPosition(.487f); }
+
+    public void servoUp(){ lServo.setPosition(.637f); rServo.setPosition(.637f); }
 
 
     public void runOpMode() throws InterruptedException {
@@ -48,6 +56,8 @@ public class AutoBlueBrickAll extends LinearOpMode {
         colorSensor = hardwareMap.get(ColorSensor.class, "colorSensor");
         distanceSensor = hardwareMap.get(DistanceSensor.class, "colorSensor");
         floorColorSensor = hardwareMap.get(ColorSensor.class, "floorColorSensor");
+        lServo = hardwareMap.servo.get("lServo");
+        rServo = hardwareMap.servo.get("rServo");
 
 
         double distTravelled = 2.0;

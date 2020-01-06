@@ -39,6 +39,13 @@ public class srv extends LinearOpMode {
     private Servo rServo;
 
 
+    public void servoUp(){ lServo.setPosition(0.75f); rServo.setPosition(0.25f); lServo.setPosition(1.0f); rServo.setPosition(0.0f); }
+
+    public void servoDown(){ lServo.setPosition(0.75f); rServo.setPosition(0.25f); lServo.setPosition(0.5f); rServo.setPosition(0.5f);}
+
+
+
+
     public void runOpMode() throws InterruptedException {
         robot = new Robot2017();
         robot.init(hardwareMap);
@@ -82,16 +89,22 @@ public class srv extends LinearOpMode {
             robot.composeIMUTelemetry();
 
 
-            lServo.setPosition(.2f);
-            rServo.setPosition(.6f);
+            servoUp();
 
-            TimeUnit.MILLISECONDS.sleep(6000);
+            TimeUnit.MILLISECONDS.sleep(2000);
 
-            //idk what's happening
-            //i'll fix it later
-            //or maybe i won't
-            lServo.setPosition(-.3f);
-            rServo.setPosition(-.6f);
+
+            servoDown();
+
+            TimeUnit.MILLISECONDS.sleep(2000);
+
+
+            servoUp();
+
+            TimeUnit.MILLISECONDS.sleep(2000);
+
+
+            lServo.setPosition(0.75f); rServo.setPosition(0.25f); lServo.setPosition(0.0f); rServo.setPosition(1.0f);
 
 
             break;

@@ -62,10 +62,7 @@ public class testleft extends LinearOpMode {
         while (opModeIsActive()) {
 
 
-            robot.flMotor.setPower(v1);
-            robot.frMotor.setPower(-v1);
-            robot.blMotor.setPower(-v1);
-            robot.brMotor.setPower(v1);
+            //fix this
 
 
 
