@@ -29,6 +29,7 @@ public class AutoRedBrickOtherSide extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
     private ColorSensor colorSensor;
     private ColorSensor floorColorSensor;
+    private TouchSensor servoTouchSensor;
     private TouchSensor touchSensor;
     private DistanceSensor distanceSensor;
     private Servo lServo;
@@ -42,8 +43,9 @@ public class AutoRedBrickOtherSide extends LinearOpMode {
 
         //nameOfThingInCode = hardwareMap.typeOfThing.get("nameOfThingInConfiguration");
         touchSensor = hardwareMap.touchSensor.get("touchSensor");
-        colorSensor = hardwareMap.get(ColorSensor.class, "colorSensorRight");
-        distanceSensor = hardwareMap.get(DistanceSensor.class, "colorSensorRight");
+        servoTouchSensor = hardwareMap.touchSensor.get("servoTouchSensor");
+        colorSensor = hardwareMap.get(ColorSensor.class, "colorSensor");
+        distanceSensor = hardwareMap.get(DistanceSensor.class, "colorSensor");
         floorColorSensor = hardwareMap.get(ColorSensor.class, "floorColorSensor");
         lServo = hardwareMap.servo.get("lServo");
         rServo = hardwareMap.servo.get("rServo");
@@ -76,40 +78,39 @@ public class AutoRedBrickOtherSide extends LinearOpMode {
 
             //robot starts facing platform
             //while too far away, move closer
-            /*
-            while (!something){
+
+            while (!robot.servoTouchSensor.isPressed()){
                 robot.flMotor.setPower(-v1);
                 robot.frMotor.setPower(-v1);
                 robot.blMotor.setPower(-v1);
                 robot.brMotor.setPower(-v1);
             }
-            */
+
             robot.flMotor.setPower(0);
             robot.frMotor.setPower(0);
             robot.blMotor.setPower(0);
             robot.brMotor.setPower(0);
 
             //Grab platform
-            lServo.setPosition(-.3f);
-            rServo.setPosition(-.6f);
+            robot.servoUp();
+            robot.gyrodrive.vertical(0.5, 0.1, robot.getHeading());
+            robot.servoDown();
 
             //Drag platform backup
-            /*
-            while (!something){
+            while (!robot.touchSensor.isPressed()){
                 robot.flMotor.setPower(v1);
                 robot.frMotor.setPower(v1);
                 robot.blMotor.setPower(v1);
                 robot.brMotor.setPower(v1);
             }
-            */
+
             robot.flMotor.setPower(0);
             robot.frMotor.setPower(0);
             robot.blMotor.setPower(0);
             robot.brMotor.setPower(0);
 
             //Release platform
-            lServo.setPosition(.2f);
-            rServo.setPosition(.6f);
+            robot.servoUp();
 
             //Move right towards blocks side
             robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-3.25), robot.getHeading());

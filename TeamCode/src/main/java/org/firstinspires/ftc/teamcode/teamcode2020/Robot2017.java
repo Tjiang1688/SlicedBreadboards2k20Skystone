@@ -45,6 +45,7 @@ public class Robot2017 {
     public ColorSensor colorSensor;
     public OpticalDistanceSensor distanceSensor;
     public TouchSensor touchSensor;
+    public TouchSensor servoTouchSensor;
 
 
     public BNO055IMU imu;
@@ -122,6 +123,7 @@ public class Robot2017 {
         colorSensor = hwMap.colorSensor.get("colorSensor");
         distanceSensor = hwMap.opticalDistanceSensor.get("colorSensor");
         touchSensor = hwMap.touchSensor.get("touchSensor");
+        servoTouchSensor = hwMap.touchSensor.get("servoTouchSensor");
         lServo = hwMap.servo.get("lServo");
         rServo = hwMap.servo.get("rServo");
 
