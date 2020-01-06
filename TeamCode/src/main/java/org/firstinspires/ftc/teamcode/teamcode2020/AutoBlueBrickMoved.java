@@ -154,6 +154,7 @@ public class AutoBlueBrickMoved extends LinearOpMode {
 
             //go back until blue line
             while (floorColorSensor.blue()<250){
+            while (floorColorSensor.blue()<150){
                 ///backward
                 robot.flMotor.setPower(v1);
                 robot.frMotor.setPower(v1*1.1);
