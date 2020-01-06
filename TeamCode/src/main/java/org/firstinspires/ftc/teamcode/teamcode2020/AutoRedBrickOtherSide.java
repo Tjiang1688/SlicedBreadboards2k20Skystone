@@ -77,8 +77,11 @@ public class AutoRedBrickOtherSide extends LinearOpMode {
 
 
             //robot starts facing platform
-            //while too far away, move closer
 
+            //Move closer
+            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(1), robot.getHeading());
+
+            //while too far away, move closer
             while (!robot.servoTouchSensor.isPressed()){
                 robot.flMotor.setPower(-v1);
                 robot.frMotor.setPower(-v1);
@@ -121,124 +124,130 @@ public class AutoRedBrickOtherSide extends LinearOpMode {
             //Start Stolen code
             //TODO determine how much time is left
 
-            //while too far away, move closer
-            while (!(distanceSensor.getDistance(DistanceUnit.INCH)<3.6)){
-                ///left
-                robot.flMotor.setPower(v1);
-                robot.frMotor.setPower(-v1);
-                robot.blMotor.setPower(-v1);
-                robot.brMotor.setPower(v1);
-            }
-            robot.flMotor.setPower(0);
-            robot.frMotor.setPower(0);
-            robot.blMotor.setPower(0);
-            robot.brMotor.setPower(0);
+            robot.imu.startAccelerationIntegration(new Position(), new Velocity(), 1000);
+            while (opModeIsActive()) {
+
+                Color.RGBToHSV((int) (colorSensor.red() * SCALE_FACTOR), (int) (colorSensor.green() * SCALE_FACTOR), (int) (colorSensor.blue() * SCALE_FACTOR), hsvValues);
+                Color.RGBToHSV((int) (floorColorSensor.red() * SCALE_FACTOR), (int) (floorColorSensor.green() * SCALE_FACTOR), (int) (floorColorSensor.blue() * SCALE_FACTOR), hsvValues);
+
+                robot.composeIMUTelemetry();
+
+                //robot starts parallel to wall and moves horizontal to be next to and parallel to the bricks
+                //while too far away, move closer
+                while (!(distanceSensor.getDistance(DistanceUnit.INCH) < 3.6)) {
+                    ///right
+                    robot.flMotor.setPower(-v1);
+                    robot.frMotor.setPower(v1);
+                    robot.blMotor.setPower(v1);
+                    robot.brMotor.setPower(-v1);
+                }
+                robot.flMotor.setPower(0);
+                robot.frMotor.setPower(0);
+                robot.blMotor.setPower(0);
+                robot.brMotor.setPower(0);
 
 
-            TimeUnit.MILLISECONDS.sleep(1000);
+                TimeUnit.MILLISECONDS.sleep(1000);
 
 
-            //while not skystone, move backwards
-            while (!(colorSensor.red() + colorSensor.blue() + colorSensor.green() < 600)){
-                ///backward
-                robot.flMotor.setPower(v1);
-                robot.frMotor.setPower(v1);
-                robot.blMotor.setPower(v1);
-                robot.brMotor.setPower(v1);
-            }
-            robot.flMotor.setPower(0);
-            robot.frMotor.setPower(0);
-            robot.blMotor.setPower(0);
-            robot.brMotor.setPower(0);
+                //while not skystone, move forwards
+                while (!(colorSensor.red() + colorSensor.blue() + colorSensor.green() < 300)) {
+                    ///forward
+                    robot.flMotor.setPower(-v1);
+                    robot.frMotor.setPower(-v1);
+                    robot.blMotor.setPower(-v1);
+                    robot.brMotor.setPower(-v1);
+                }
+                robot.flMotor.setPower(0);
+                robot.frMotor.setPower(0);
+                robot.blMotor.setPower(0);
+                robot.brMotor.setPower(0);
 
 
-
-            //robot goes back to knock the other bricks out of the way to be in front of the skystone
-            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-1.05), robot.getHeading());  // .55 is the length of the front of the robot
-
+                //robot goes back to knock the other bricks out of the way to be in front of the skystone
+                robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-.75), robot.getHeading());  // .55 is the length of the front of the robot
 
 
-            //SLIIIIIIIDE to the left
-            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-.6), robot.getHeading());
+                //SLIIIIIIIDE to the right
+                robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(.6), robot.getHeading());
 
 
-
-            //open feeder
-            feederWide = 0.5;
-            robot.mfeedMotor.setPower(feederWide);
-            TimeUnit.MILLISECONDS.sleep(900);
-            feederWide = 0;
-            robot.mfeedMotor.setPower(feederWide);
-
+                //open feeder
+                feederWide = 0.5;
+                robot.mfeedMotor.setPower(feederWide);
+                TimeUnit.MILLISECONDS.sleep(900);
+                feederWide = 0;
+                robot.mfeedMotor.setPower(feederWide);
 
 
-            //move forward to block
-            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(.45), robot.getHeading());
+                //move forward to block
+                robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(.45), robot.getHeading());
 
 
-
-            //close feeder
-            feederWide = -0.5;
-            robot.mfeedMotor.setPower(feederWide);
-            TimeUnit.MILLISECONDS.sleep(900);
-            feederWide = 0;
-            robot.mfeedMotor.setPower(feederWide);
-
+                //close feeder
+                feederWide = -0.5;
+                robot.mfeedMotor.setPower(feederWide);
+                TimeUnit.MILLISECONDS.sleep(900);
+                feederWide = 0;
+                robot.mfeedMotor.setPower(feederWide);
 
 
-            //while block not in feeder, feed
-            while (touchSensor.getValue() != 1) {
-                feederPow = .5;
+                //while block not in feeder, feed
+                while (touchSensor.getValue() != 1) {
+                    feederPow = .5;
+                    robot.rfeedMotor.setPower(-feederPow);
+                    robot.lfeedMotor.setPower(feederPow);
+                }
+                feederPow = 0;
                 robot.rfeedMotor.setPower(-feederPow);
                 robot.lfeedMotor.setPower(feederPow);
+
+
+                robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-.8), robot.getHeading());
+
+
+                //go back until red line
+                while (floorColorSensor.red() < 1000) {  /////////////TODO FIND A VALUE FOR THE RED
+                    ///backward
+                    robot.flMotor.setPower(v1);
+                    robot.frMotor.setPower(v1);
+                    robot.blMotor.setPower(v1);
+                    robot.brMotor.setPower(v1);
+                }
+                robot.flMotor.setPower(0);
+                robot.frMotor.setPower(0);
+                robot.blMotor.setPower(0);
+                robot.brMotor.setPower(0);
+
+                TimeUnit.MILLISECONDS.sleep(1000);
+
+
+                //from middle blue line, move back towards platform
+                robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-2.3), 0);
+
+
+                //turn to platform on right (already moved by alliance partner)
+                robot.gyrodrive.turn(0.7, 90);
+
+
+                //////////////////////////////////////////////////////YO TIANA pulley up to raise block here
+
+
+                //open feeder to let go of block
+                feederWide = 0.5;
+                robot.mfeedMotor.setPower(feederWide);
+                TimeUnit.MILLISECONDS.sleep(900);
+                feederWide = 0;
+                robot.mfeedMotor.setPower(feederWide);
+
+
+                robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-.6), robot.getHeading());
+
+                ///move back to blue line
+                robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(2.3), robot.getHeading());
+
+                break;
             }
-            feederPow = 0;
-            robot.rfeedMotor.setPower(-feederPow);
-            robot.lfeedMotor.setPower(feederPow);
-
-
-            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(.8), robot.getHeading());
-
-
-            //go forwards until red line
-            while (floorColorSensor.red()<700){
-                ///forwards
-                robot.flMotor.setPower(-v1);
-                robot.frMotor.setPower(-v1);
-                robot.blMotor.setPower(-v1);
-                robot.brMotor.setPower(-v1);
-            }
-            robot.flMotor.setPower(0);
-            robot.frMotor.setPower(0);
-            robot.blMotor.setPower(0);
-            robot.brMotor.setPower(0);
-
-            TimeUnit.MILLISECONDS.sleep(1000);
-
-
-            //from middle red line, move forwards towards platform
-            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(2.3), 0);
-
-
-            //turn to platform on right (already moved by alliance partner)
-            robot.gyrodrive.turn(0.7, -90);
-
-
-
-            //open feeder to let go of block
-            feederWide = 0.5;
-            robot.mfeedMotor.setPower(feederWide);
-            TimeUnit.MILLISECONDS.sleep(900);
-            feederWide = 0;
-            robot.mfeedMotor.setPower(feederWide);
-
-
-            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-.6), robot.getHeading());
-
-            ///move back to red line
-            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(2.3), robot.getHeading());
-
-            break;
         }
     }
 }

@@ -76,6 +76,10 @@ public class AutoBlueBrickOtherSide extends LinearOpMode {
 
 
             //robot starts facing platform
+
+            //Move closer
+            robot.gyrodrive.horizontal(-0.7, Convert.tileToYeetGV(1), robot.getHeading());
+
             //while too far away, move closer
             while (!robot.servoTouchSensor.isPressed()){
                 robot.flMotor.setPower(-v1);
