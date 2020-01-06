@@ -26,4 +26,9 @@ build/
 
 *ASUS_PC_01*
 
+<<<<<<< HEAD
+TeamCode/src/main/java/org/firstinspires/ftc/teamcode/teamcode2020/AutoBlueBrickMoved.java
+*.java
+=======
 TeamCode/build.gradle
+>>>>>>> 31c4cd14f13534a4cb73ba6db2e979b38d087045
