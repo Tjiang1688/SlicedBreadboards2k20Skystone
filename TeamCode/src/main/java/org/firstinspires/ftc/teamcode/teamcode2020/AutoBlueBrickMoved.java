@@ -72,7 +72,7 @@ public class AutoBlueBrickMoved extends LinearOpMode {
         double distTravelled = 2.0;
         double feederPow = 0;
         double feederWide = 0;
-        int floorBlue = 700;
+        int floorBlue = 500;
         final double SCALE_FACTOR = 255;
         float hsvValues[] = {0F, 0F, 0F};
         boolean skystone = false;
@@ -169,99 +169,97 @@ public class AutoBlueBrickMoved extends LinearOpMode {
 
             //go back until blue line
 
-            while (floorColorSensor.blue() < 150) {
+            while (floorColorSensor.blue() < floorBlue) {
 
-                while (floorColorSensor.blue() < floorBlue) {
-
-                    ///backward
-                    robot.flMotor.setPower(v1);
-                    robot.frMotor.setPower(v1);
-                    robot.blMotor.setPower(v1);
-                    robot.brMotor.setPower(v1);
-                }
-                robot.flMotor.setPower(0);
-                robot.frMotor.setPower(0);
-                robot.blMotor.setPower(0);
-                robot.brMotor.setPower(0);
-
-                TimeUnit.MILLISECONDS.sleep(1000);
-
-
-                robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-1.3), 0);
-
-                robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-.9), 0);
-
-
-                //from middle blue line, move back towards platform
-                robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-1.5), 0);
-
-
-                //turn to platform on right (already moved by alliance partner)
-                robot.gyrodrive.turn(0.7, -90);
-
-
-                //lift feeder+block over platform
-                robot.liftMotor.setPower(-.8);
-                TimeUnit.MILLISECONDS.sleep(1800);
-                robot.liftMotor.setPower(0);
-
-
-                //while not touching platform, move forward
-                while (servoTouchSensor.getValue() != 1) {
-                    robot.flMotor.setPower(-.3);
-                    robot.frMotor.setPower(-.3);
-                    robot.blMotor.setPower(-.3);
-                    robot.brMotor.setPower(-.3);
-                }
-
-
-                robot.servoUp();
-
-
-                robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(.7), 0);
-                //lower feeder
-                robot.liftMotor.setPower(.2);
-                TimeUnit.MILLISECONDS.sleep(700);
-                robot.liftMotor.setPower(0);
-
-
-                //open feeder to let go of block
-                feederWide = 0.5;
-                robot.rfeedMotor.setPower(feederPow);
-                robot.lfeedMotor.setPower(-feederPow);
-                TimeUnit.MILLISECONDS.sleep(600);
-                feederWide = 0;
-                robot.lfeedMotor.setPower(feederWide);
-                robot.rfeedMotor.setPower(feederWide);
-
-                robot.mfeedMotor.setPower(-feederWide);
-                TimeUnit.MILLISECONDS.sleep(900);
-                robot.mfeedMotor.setPower(0);
-
-
-                robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-.6), -90);
-
-                //make sure facing correct direction
-                robot.gyrodrive.turn(0.7, -90);
-
-                robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-2), -90);
-
-
-                ///move left to blue line
-                while (floorColorSensor.blue() < floorBlue) {
-                    ///left
-                    robot.flMotor.setPower(v1);
-                    robot.frMotor.setPower(-v1);
-                    robot.blMotor.setPower(-v1);
-                    robot.brMotor.setPower(v1);
-                }
-                robot.flMotor.setPower(0);
-                robot.frMotor.setPower(0);
-                robot.blMotor.setPower(0);
-                robot.brMotor.setPower(0);
-
-                break;
+                ///backward
+                robot.flMotor.setPower(v1);
+                robot.frMotor.setPower(v1);
+                robot.blMotor.setPower(v1);
+                robot.brMotor.setPower(v1);
             }
+            robot.flMotor.setPower(0);
+            robot.frMotor.setPower(0);
+            robot.blMotor.setPower(0);
+            robot.brMotor.setPower(0);
+
+            TimeUnit.MILLISECONDS.sleep(1000);
+
+            //from middle blue line, move back towards platform
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-1.3), 0);
+
+            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-.9), 0);
+
+
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-1.5), 0);
+
+
+            //turn to platform on right (already moved by alliance partner)
+            robot.gyrodrive.turn(0.7, -90);
+
+
+            //lift feeder+block over platform
+            robot.liftMotor.setPower(-.8);
+            TimeUnit.MILLISECONDS.sleep(1800);
+            robot.liftMotor.setPower(0);
+
+
+            //while not touching platform, move forward
+            while (servoTouchSensor.getValue() != 1) {
+                robot.flMotor.setPower(-.3);
+                robot.frMotor.setPower(-.3);
+                robot.blMotor.setPower(-.3);
+                robot.brMotor.setPower(-.3);
+            }
+
+
+            servoUp();
+
+
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(.7), 0);
+            //lower feeder
+            robot.liftMotor.setPower(.2);
+            TimeUnit.MILLISECONDS.sleep(700);
+            robot.liftMotor.setPower(0);
+
+
+            //open feeder to let go of block
+            feederWide = 0.5;
+            robot.rfeedMotor.setPower(feederPow);
+            robot.lfeedMotor.setPower(-feederPow);
+            TimeUnit.MILLISECONDS.sleep(600);
+            robot.lfeedMotor.setPower(0);
+            robot.rfeedMotor.setPower(0);
+
+            robot.mfeedMotor.setPower(-feederWide);
+            TimeUnit.MILLISECONDS.sleep(900);
+            robot.mfeedMotor.setPower(0);
+
+
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-.6), -90);
+            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-.6), -90);
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-.4), -90);
+
+            //make sure facing correct direction
+            robot.gyrodrive.turn(0.7, 0);
+
+
+
+
+            ///move left to blue line
+            while (floorColorSensor.blue() < floorBlue) {
+                ///left
+                robot.flMotor.setPower(-v1);
+                robot.frMotor.setPower(-v1);
+                robot.blMotor.setPower(-v1);
+                robot.brMotor.setPower(-v1);
+            }
+            robot.flMotor.setPower(0);
+            robot.frMotor.setPower(0);
+            robot.blMotor.setPower(0);
+            robot.brMotor.setPower(0);
+
+            break;
+
         }
     }
 }
