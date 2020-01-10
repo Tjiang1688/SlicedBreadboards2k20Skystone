@@ -35,6 +35,7 @@ public class colortest extends LinearOpMode {
     private TouchSensor touchSensor;
     private DistanceSensor distanceSensor;
     private DistanceSensor rightDistanceSensor;
+    private DistanceSensor actualDistanceSensor;
 
 
     public void runOpMode() throws InterruptedException {
@@ -47,6 +48,7 @@ public class colortest extends LinearOpMode {
         distanceSensor = hardwareMap.get(DistanceSensor.class, "colorSensor");
         rightColorSensor = hardwareMap.get(ColorSensor.class, "colorSensorRight");
         rightDistanceSensor = hardwareMap.get(DistanceSensor.class, "colorSensorRight");
+        actualDistanceSensor = hardwareMap.get(DistanceSensor.class, "actualDistance");
 
         double distTravelled = 2.0;
         double feederPow = 0;
@@ -78,6 +80,7 @@ public class colortest extends LinearOpMode {
             telemetry.addData("right blue:", rightColorSensor.blue());
 
             telemetry.addData("left dist", distanceSensor.getDistance(DistanceUnit.INCH));
+            telemetry.addData("right dist", rightDistanceSensor.getDistance(DistanceUnit.INCH));
             telemetry.addData("right dist", rightDistanceSensor.getDistance(DistanceUnit.INCH));
 
 

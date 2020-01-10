@@ -67,7 +67,7 @@ public class AutoRedBrickMoved extends LinearOpMode {
         //COLOR SENSOR ON THE RIGHT SIDE Y'ALL
         //R IS FOR RED and R IS FOR RIGHT SIDE
         colorSensor = hardwareMap.get(ColorSensor.class, "colorSensorRight");
-        distanceSensor = hardwareMap.get(DistanceSensor.class, "colorSensorRight");
+        distanceSensor = hardwareMap.get(DistanceSensor.class, "actualDistance");
         servoTouchSensor = hardwareMap.touchSensor.get("servoTouchSensor");
         lServo = hardwareMap.servo.get("lServo");
         rServo = hardwareMap.servo.get("rServo");
@@ -100,12 +100,12 @@ public class AutoRedBrickMoved extends LinearOpMode {
 
             //robot starts parallel to wall and moves horizontal to be next to and parallel to the bricks
             //while too far away, move closer
-            while (!(distanceSensor.getDistance(DistanceUnit.INCH) < 1.2)) {
+            while (!(distanceSensor.getDistance(DistanceUnit.INCH) < 2)) {
                 ///right
-                robot.flMotor.setPower(-v1);
-                robot.frMotor.setPower(v1);
-                robot.blMotor.setPower(v1);
-                robot.brMotor.setPower(-v1);
+                robot.flMotor.setPower(-v1/1.5);
+                robot.frMotor.setPower(v1/1.5);
+                robot.blMotor.setPower(v1/1.5);
+                robot.brMotor.setPower(-v1/1.5);
             }
             robot.flMotor.setPower(0);
             robot.frMotor.setPower(0);
@@ -115,16 +115,17 @@ public class AutoRedBrickMoved extends LinearOpMode {
 
             TimeUnit.MILLISECONDS.sleep(1000);
 
+
             robot.gyrodrive.turn(0.7, 0);
 
 
             //while not skystone, move forwards
-            while (!(colorSensor.red() + colorSensor.blue() + colorSensor.green() < 4500)) {
+            while (!(colorSensor.red() + colorSensor.blue() + colorSensor.green() < 4000)) {
                 ///forward
-                robot.flMotor.setPower(-v1);
-                robot.frMotor.setPower(-v1);
-                robot.blMotor.setPower(-v1);
-                robot.brMotor.setPower(-v1);
+                robot.flMotor.setPower(-v1/1.3);
+                robot.frMotor.setPower(-v1/1.3);
+                robot.blMotor.setPower(-v1/1.3);
+                robot.brMotor.setPower(-v1/1.3);
             }
             robot.flMotor.setPower(0);
             robot.frMotor.setPower(0);
@@ -133,7 +134,7 @@ public class AutoRedBrickMoved extends LinearOpMode {
 
 
             //robot goes back to knock the other bricks out of the way to be in front of the skystone
-            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-.75), robot.getHeading());  // .55 is the length of the front of the robot
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-.83), robot.getHeading());  // .55 is the length of the front of the robot
 
 
             //SLIIIIIIIDE to the right

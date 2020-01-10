@@ -235,7 +235,7 @@ public class AutoRedBrickAll extends LinearOpMode {
 
             //make sure facing correct direction
             robot.gyrodrive.turn(0.7, 0);
-            
+
 
 
             ///move left to blue line
