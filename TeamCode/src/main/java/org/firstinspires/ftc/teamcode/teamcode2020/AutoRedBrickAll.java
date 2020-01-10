@@ -8,6 +8,7 @@ import android.graphics.Color;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
@@ -34,6 +35,23 @@ public class AutoRedBrickAll extends LinearOpMode {
     private ColorSensor floorColorSensor;
     private TouchSensor touchSensor;
     private DistanceSensor distanceSensor;
+    private TouchSensor servoTouchSensor;
+    private Servo lServo;
+    private Servo rServo;
+
+    public void servoUp() {
+        lServo.setPosition(0.75f);
+        rServo.setPosition(0.25f);
+        lServo.setPosition(1.0f);
+        rServo.setPosition(0.0f);
+    }
+
+    public void servoDown() {
+        lServo.setPosition(0.75f);
+        rServo.setPosition(0.25f);
+        lServo.setPosition(0.5f);
+        rServo.setPosition(0.5f);
+    }
 
     public void runOpMode() throws InterruptedException {
         robot = new Robot2017();
@@ -43,9 +61,16 @@ public class AutoRedBrickAll extends LinearOpMode {
 
         //nameOfThingInCode = hardwareMap.typeOfThing.get("nameOfThingInConfiguration");
         touchSensor = hardwareMap.touchSensor.get("touchSensor");
+
+        floorColorSensor = hardwareMap.get(ColorSensor.class, "floorColorSensor");
+
+        //COLOR SENSOR ON THE RIGHT SIDE Y'ALL
+        //R IS FOR RED and R IS FOR RIGHT SIDE
         colorSensor = hardwareMap.get(ColorSensor.class, "colorSensorRight");
         distanceSensor = hardwareMap.get(DistanceSensor.class, "colorSensorRight");
-        floorColorSensor = hardwareMap.get(ColorSensor.class, "floorColorSensor");
+        servoTouchSensor = hardwareMap.touchSensor.get("servoTouchSensor");
+        lServo = hardwareMap.servo.get("lServo");
+        rServo = hardwareMap.servo.get("rServo");
 
         double distTravelled = 2.0;
         double feederPow = 0;
@@ -55,26 +80,27 @@ public class AutoRedBrickAll extends LinearOpMode {
         boolean skystone = false;
         int stoneCount = 0;
         double v1 = .4;
+        int floorRed = 230;
 
+
+        //inputGameConfig();
 
         //MAKE SURE FEEDER IS IN CLOSED POSITION BEFORE START
 
 
-        //Wait for the match to begin, press start button
+        //Wait for the match to begin, presses start button
         waitForStart();
         robot.imu.startAccelerationIntegration(new Position(), new Velocity(), 1000);
         while (opModeIsActive()) {
 
-            //color sensor scale factors
-            Color.RGBToHSV((int)(colorSensor.red() * SCALE_FACTOR), (int) (colorSensor.green() * SCALE_FACTOR), (int) (colorSensor.blue() * SCALE_FACTOR), hsvValues);
-            Color.RGBToHSV((int)(floorColorSensor.red() * SCALE_FACTOR), (int) (floorColorSensor.green() * SCALE_FACTOR), (int) (floorColorSensor.blue() * SCALE_FACTOR), hsvValues);
+            Color.RGBToHSV((int) (colorSensor.red() * SCALE_FACTOR), (int) (colorSensor.green() * SCALE_FACTOR), (int) (colorSensor.blue() * SCALE_FACTOR), hsvValues);
+            Color.RGBToHSV((int) (floorColorSensor.red() * SCALE_FACTOR), (int) (floorColorSensor.green() * SCALE_FACTOR), (int) (floorColorSensor.blue() * SCALE_FACTOR), hsvValues);
 
             robot.composeIMUTelemetry();
 
-
             //robot starts parallel to wall and moves horizontal to be next to and parallel to the bricks
             //while too far away, move closer
-            while (!(distanceSensor.getDistance(DistanceUnit.INCH)<3.6)){
+            while (!(distanceSensor.getDistance(DistanceUnit.INCH) < 1.2)) {
                 ///right
                 robot.flMotor.setPower(-v1);
                 robot.frMotor.setPower(v1);
@@ -87,11 +113,13 @@ public class AutoRedBrickAll extends LinearOpMode {
             robot.brMotor.setPower(0);
 
 
-            TimeUnit.MILLISECONDS.sleep(800);
+            TimeUnit.MILLISECONDS.sleep(1000);
+
+            robot.gyrodrive.turn(0.7, 0);
 
 
             //while not skystone, move forwards
-            while (!(colorSensor.red() + colorSensor.blue() + colorSensor.green() < 700)){
+            while (!(colorSensor.red() + colorSensor.blue() + colorSensor.green() < 4500)) {
                 ///forward
                 robot.flMotor.setPower(-v1);
                 robot.frMotor.setPower(-v1);
@@ -104,36 +132,29 @@ public class AutoRedBrickAll extends LinearOpMode {
             robot.brMotor.setPower(0);
 
 
-
             //robot goes back to knock the other bricks out of the way to be in front of the skystone
             robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-.75), robot.getHeading());  // .55 is the length of the front of the robot
 
-            //SLIIIIIIIDE to the right
-            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(.6), robot.getHeading());
 
+            //SLIIIIIIIDE to the right
+            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(.56), robot.getHeading());
 
 
             //open feeder
             feederWide = 0.5;
-            robot.mfeedMotor.setPower(feederWide);
-            TimeUnit.MILLISECONDS.sleep(900);
-            feederWide = 0;
-            robot.mfeedMotor.setPower(feederWide);
-
+            robot.mfeedMotor.setPower(-feederWide);
+            TimeUnit.MILLISECONDS.sleep(1000);
+            robot.mfeedMotor.setPower(0);
 
 
             //move forward to block
             robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(.45), robot.getHeading());
 
 
-
             //close feeder
-            feederWide = -0.5;
             robot.mfeedMotor.setPower(feederWide);
-            TimeUnit.MILLISECONDS.sleep(900);
-            feederWide = 0;
-            robot.mfeedMotor.setPower(feederWide);
-
+            TimeUnit.MILLISECONDS.sleep(650);
+            robot.mfeedMotor.setPower(0);
 
 
             //while block not in feeder, feed
@@ -142,17 +163,15 @@ public class AutoRedBrickAll extends LinearOpMode {
                 robot.rfeedMotor.setPower(-feederPow);
                 robot.lfeedMotor.setPower(feederPow);
             }
-            feederPow = 0;
-            robot.rfeedMotor.setPower(-feederPow);
-            robot.lfeedMotor.setPower(feederPow);
+            robot.rfeedMotor.setPower(0);
+            robot.lfeedMotor.setPower(0);
 
 
+            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-.9), robot.getHeading());
 
-            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-.8), robot.getHeading());
 
-
-            //go back until blue line
-            while (floorColorSensor.red()<1000){ /////TODO FIND A VALUE FOR RED
+            //go back until red line
+            while (floorColorSensor.red() < floorRed) {  /////////////TODO FIND A VALUE FOR THE RED
                 ///backward
                 robot.flMotor.setPower(v1);
                 robot.frMotor.setPower(v1);
@@ -168,51 +187,64 @@ public class AutoRedBrickAll extends LinearOpMode {
 
 
             //from middle blue line, move back towards platform
-            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-2.8), 0);
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-1.3), 0);
+
+            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(.9), 0);
+
+
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-1.5), 0);
 
 
             //turn to platform on right (not moved by alliance partner)
             robot.gyrodrive.turn(0.7, -90);
 
 
+            //lift feeder+block over platform
+            robot.liftMotor.setPower(-.8);
+            TimeUnit.MILLISECONDS.sleep(1800);
+            robot.liftMotor.setPower(0);
 
 
+            servoUp();
 
-            //////////////////////////////////////YO TIANA move forward to platform here
 
-
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(.7), 0);
+            //lower feeder
+            robot.liftMotor.setPower(.2);
+            TimeUnit.MILLISECONDS.sleep(700);
+            robot.liftMotor.setPower(0);
 
 
             //open feeder to let go of block
             feederWide = 0.5;
-            robot.mfeedMotor.setPower(feederWide);
+            robot.rfeedMotor.setPower(feederPow);
+            robot.lfeedMotor.setPower(-feederPow);
+            TimeUnit.MILLISECONDS.sleep(600);
+            robot.lfeedMotor.setPower(0);
+            robot.rfeedMotor.setPower(0);
+
+            robot.mfeedMotor.setPower(-feederWide);
             TimeUnit.MILLISECONDS.sleep(900);
-            feederWide = 0;
-            robot.mfeedMotor.setPower(feederWide);
+            robot.mfeedMotor.setPower(0);
 
 
-            //after drop off block, come out, go around block, and go back to platform
-            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-.4), robot.getHeading());
-            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-.6), robot.getHeading());
-            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(.4), robot.getHeading());
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-.6), 90);
+            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(.6), 90);
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-.4), 90);
 
-
-            ///////////////////////////// YO TIANA servo down for platform here
-
-            //drag platform back
-            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-1.4), robot.getHeading());
 
             //make sure facing correct direction
-            robot.gyrodrive.turn(0.7, -90);
+            robot.gyrodrive.turn(0.7, 0);
+            
 
 
-            ///move left to red line
-            while (floorColorSensor.blue()<1000){
+            ///move left to blue line
+            while (floorColorSensor.blue() < floorRed) {
                 ///left
-                robot.flMotor.setPower(v1);
+                robot.flMotor.setPower(-v1);
                 robot.frMotor.setPower(-v1);
                 robot.blMotor.setPower(-v1);
-                robot.brMotor.setPower(v1);
+                robot.brMotor.setPower(-v1);
             }
             robot.flMotor.setPower(0);
             robot.frMotor.setPower(0);
@@ -220,6 +252,7 @@ public class AutoRedBrickAll extends LinearOpMode {
             robot.brMotor.setPower(0);
 
             break;
+
         }
     }
 }

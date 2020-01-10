@@ -80,7 +80,7 @@ public class AutoRedBrickMoved extends LinearOpMode {
         boolean skystone = false;
         int stoneCount = 0;
         double v1 = .4;
-        int floorRed = 300;
+        int floorRed = 230;
 
 
         //inputGameConfig();
@@ -100,7 +100,7 @@ public class AutoRedBrickMoved extends LinearOpMode {
 
             //robot starts parallel to wall and moves horizontal to be next to and parallel to the bricks
             //while too far away, move closer
-            while (!(distanceSensor.getDistance(DistanceUnit.INCH) < 3.6)) {
+            while (!(distanceSensor.getDistance(DistanceUnit.INCH) < 1.2)) {
                 ///right
                 robot.flMotor.setPower(-v1);
                 robot.frMotor.setPower(v1);
@@ -119,7 +119,7 @@ public class AutoRedBrickMoved extends LinearOpMode {
 
 
             //while not skystone, move forwards
-            while (!(colorSensor.red() + colorSensor.blue() + colorSensor.green() < 800)) {
+            while (!(colorSensor.red() + colorSensor.blue() + colorSensor.green() < 4500)) {
                 ///forward
                 robot.flMotor.setPower(-v1);
                 robot.frMotor.setPower(-v1);
@@ -238,19 +238,22 @@ public class AutoRedBrickMoved extends LinearOpMode {
 
 
             robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-.6), 90);
+            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(.6), 90);
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-.4), 90);
+
 
             //make sure facing correct direction
-            robot.gyrodrive.turn(0.7, 90);
+            robot.gyrodrive.turn(0.7, 0);
 
-            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(2), 90);
+
 
 
             ///move left to blue line
             while (floorColorSensor.blue() < floorRed) {
                 ///left
                 robot.flMotor.setPower(-v1);
-                robot.frMotor.setPower(v1);
-                robot.blMotor.setPower(v1);
+                robot.frMotor.setPower(-v1);
+                robot.blMotor.setPower(-v1);
                 robot.brMotor.setPower(-v1);
             }
             robot.flMotor.setPower(0);

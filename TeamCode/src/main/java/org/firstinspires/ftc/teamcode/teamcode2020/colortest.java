@@ -31,8 +31,10 @@ public class colortest extends LinearOpMode {
     private Robot2017 robot;
     private ElapsedTime runtime = new ElapsedTime();
     private ColorSensor colorSensor;
+    private ColorSensor rightColorSensor;
     private TouchSensor touchSensor;
     private DistanceSensor distanceSensor;
+    private DistanceSensor rightDistanceSensor;
 
 
     public void runOpMode() throws InterruptedException {
@@ -43,6 +45,8 @@ public class colortest extends LinearOpMode {
         touchSensor = hardwareMap.touchSensor.get("touchSensor");
         colorSensor = hardwareMap.get(ColorSensor.class, "colorSensor");
         distanceSensor = hardwareMap.get(DistanceSensor.class, "colorSensor");
+        rightColorSensor = hardwareMap.get(ColorSensor.class, "colorSensorRight");
+        rightDistanceSensor = hardwareMap.get(DistanceSensor.class, "colorSensorRight");
 
         double distTravelled = 2.0;
         double feederPow = 0;
@@ -60,13 +64,22 @@ public class colortest extends LinearOpMode {
         while (opModeIsActive()) {
 
             Color.RGBToHSV((int)(colorSensor.red() * SCALE_FACTOR), (int) (colorSensor.green() * SCALE_FACTOR), (int) (colorSensor.blue() * SCALE_FACTOR), hsvValues);
+            Color.RGBToHSV((int)(rightColorSensor.red() * SCALE_FACTOR), (int) (rightColorSensor.green() * SCALE_FACTOR), (int) (rightColorSensor.blue() * SCALE_FACTOR), hsvValues);
 
 
             robot.composeIMUTelemetry();
 
-            telemetry.addData("red:", colorSensor.red());
-            telemetry.addData("green:", colorSensor.green());
-            telemetry.addData("blue:", colorSensor.blue());
+            telemetry.addData("left red:", colorSensor.red());
+            telemetry.addData("left green:", colorSensor.green());
+            telemetry.addData("left blue:", colorSensor.blue());
+
+            telemetry.addData("right red:", rightColorSensor.red());
+            telemetry.addData("right green:", rightColorSensor.green());
+            telemetry.addData("right blue:", rightColorSensor.blue());
+
+            telemetry.addData("left dist", distanceSensor.getDistance(DistanceUnit.INCH));
+            telemetry.addData("right dist", rightDistanceSensor.getDistance(DistanceUnit.INCH));
+
 
 
             telemetry.update();
