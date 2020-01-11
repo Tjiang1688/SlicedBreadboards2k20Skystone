@@ -100,12 +100,12 @@ public class AutoRedBrickAll extends LinearOpMode {
 
             //robot starts parallel to wall and moves horizontal to be next to and parallel to the bricks
             //while too far away, move closer
-            while (!(distanceSensor.getDistance(DistanceUnit.INCH) < 1.2)) {
+            while (!(distanceSensor.getDistance(DistanceUnit.INCH) < 3.6)) {
                 ///right
-                robot.flMotor.setPower(-v1);
-                robot.frMotor.setPower(v1);
-                robot.blMotor.setPower(v1);
-                robot.brMotor.setPower(-v1);
+                robot.flMotor.setPower(-v1/1.5);
+                robot.frMotor.setPower(v1/1.5);
+                robot.blMotor.setPower(v1/1.5);
+                robot.brMotor.setPower(-v1/1.5);
             }
             robot.flMotor.setPower(0);
             robot.frMotor.setPower(0);
@@ -113,18 +113,18 @@ public class AutoRedBrickAll extends LinearOpMode {
             robot.brMotor.setPower(0);
 
 
-            TimeUnit.MILLISECONDS.sleep(1000);
+            //TimeUnit.MILLISECONDS.sleep(1000);
 
             robot.gyrodrive.turn(0.7, 0);
 
 
             //while not skystone, move forwards
-            while (!(colorSensor.red() + colorSensor.blue() + colorSensor.green() < 4500)) {
+            while (!(colorSensor.red() + colorSensor.blue() + colorSensor.green() < 4000)) {
                 ///forward
-                robot.flMotor.setPower(-v1);
-                robot.frMotor.setPower(-v1);
-                robot.blMotor.setPower(-v1);
-                robot.brMotor.setPower(-v1);
+                robot.flMotor.setPower(-v1/1.3);
+                robot.frMotor.setPower(-v1/1.3);
+                robot.blMotor.setPower(-v1/1.3);
+                robot.brMotor.setPower(-v1/1.3);
             }
             robot.flMotor.setPower(0);
             robot.frMotor.setPower(0);
@@ -133,7 +133,7 @@ public class AutoRedBrickAll extends LinearOpMode {
 
 
             //robot goes back to knock the other bricks out of the way to be in front of the skystone
-            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-.75), robot.getHeading());  // .55 is the length of the front of the robot
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-.83), robot.getHeading());  // .55 is the length of the front of the robot
 
 
             //SLIIIIIIIDE to the right
@@ -148,7 +148,7 @@ public class AutoRedBrickAll extends LinearOpMode {
 
 
             //move forward to block
-            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(.45), robot.getHeading());
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(.52), robot.getHeading());
 
 
             //close feeder
@@ -165,6 +165,11 @@ public class AutoRedBrickAll extends LinearOpMode {
             }
             robot.rfeedMotor.setPower(0);
             robot.lfeedMotor.setPower(0);
+
+            //close feeder
+            robot.mfeedMotor.setPower(feederWide);
+            TimeUnit.MILLISECONDS.sleep(100);
+            robot.mfeedMotor.setPower(0);
 
 
             robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-.9), robot.getHeading());
@@ -183,7 +188,7 @@ public class AutoRedBrickAll extends LinearOpMode {
             robot.blMotor.setPower(0);
             robot.brMotor.setPower(0);
 
-            TimeUnit.MILLISECONDS.sleep(1000);
+            TimeUnit.MILLISECONDS.sleep(500);
 
 
             //from middle blue line, move back towards platform
@@ -208,7 +213,7 @@ public class AutoRedBrickAll extends LinearOpMode {
             servoUp();
 
 
-            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(.7), 0);
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(1), 0);
             //lower feeder
             robot.liftMotor.setPower(.2);
             TimeUnit.MILLISECONDS.sleep(700);
@@ -228,15 +233,24 @@ public class AutoRedBrickAll extends LinearOpMode {
             robot.mfeedMotor.setPower(0);
 
 
-            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-.6), 90);
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-.4), 90);
             robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(.6), 90);
             robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-.4), 90);
 
 
+            servoDown();
+
+            //drag platform back
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-1.4), 90);
+
+            //TimeUnit.MILLISECONDS.sleep(1000);
+            ////////////TODO idk bro
+            servoUp();
+
             //make sure facing correct direction
             robot.gyrodrive.turn(0.7, 0);
 
-
+            robot.gyrodrive.vertical(1, Convert.tileToYeetGV(1.5), 0);
 
             ///move left to blue line
             while (floorColorSensor.blue() < floorRed) {

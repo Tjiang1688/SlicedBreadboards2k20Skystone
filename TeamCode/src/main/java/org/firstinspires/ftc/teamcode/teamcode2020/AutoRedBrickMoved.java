@@ -100,7 +100,7 @@ public class AutoRedBrickMoved extends LinearOpMode {
 
             //robot starts parallel to wall and moves horizontal to be next to and parallel to the bricks
             //while too far away, move closer
-            while (!(distanceSensor.getDistance(DistanceUnit.INCH) < 2)) {
+            while (!(distanceSensor.getDistance(DistanceUnit.INCH) < 3.6)) {
                 ///right
                 robot.flMotor.setPower(-v1/1.5);
                 robot.frMotor.setPower(v1/1.5);
@@ -113,7 +113,7 @@ public class AutoRedBrickMoved extends LinearOpMode {
             robot.brMotor.setPower(0);
 
 
-            TimeUnit.MILLISECONDS.sleep(1000);
+            //TimeUnit.MILLISECONDS.sleep(1000);
 
 
             robot.gyrodrive.turn(0.7, 0);
@@ -149,7 +149,7 @@ public class AutoRedBrickMoved extends LinearOpMode {
 
 
             //move forward to block
-            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(.45), robot.getHeading());
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(.52), robot.getHeading());
 
 
             //close feeder
@@ -166,6 +166,11 @@ public class AutoRedBrickMoved extends LinearOpMode {
             }
             robot.rfeedMotor.setPower(0);
             robot.lfeedMotor.setPower(0);
+
+            //close feeder
+            robot.mfeedMotor.setPower(feederWide);
+            TimeUnit.MILLISECONDS.sleep(100);
+            robot.mfeedMotor.setPower(0);
 
 
             robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-.9), robot.getHeading());
@@ -184,7 +189,7 @@ public class AutoRedBrickMoved extends LinearOpMode {
             robot.blMotor.setPower(0);
             robot.brMotor.setPower(0);
 
-            TimeUnit.MILLISECONDS.sleep(1000);
+            TimeUnit.MILLISECONDS.sleep(500);
 
 
             //from middle blue line, move back towards platform
@@ -218,7 +223,7 @@ public class AutoRedBrickMoved extends LinearOpMode {
             servoUp();
 
 
-            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(.7), 0);
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(.5), 0);
             //lower feeder
             robot.liftMotor.setPower(.2);
             TimeUnit.MILLISECONDS.sleep(700);
@@ -245,6 +250,8 @@ public class AutoRedBrickMoved extends LinearOpMode {
 
             //make sure facing correct direction
             robot.gyrodrive.turn(0.7, 0);
+
+            robot.gyrodrive.vertical(1.0, Convert.tileToYeetGV(2), 0);
 
 
 

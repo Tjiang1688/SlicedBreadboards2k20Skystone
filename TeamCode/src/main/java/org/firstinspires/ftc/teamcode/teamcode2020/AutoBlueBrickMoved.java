@@ -110,7 +110,7 @@ public class AutoBlueBrickMoved extends LinearOpMode {
             robot.brMotor.setPower(0);
 
 
-            TimeUnit.MILLISECONDS.sleep(1000);
+            //TimeUnit.MILLISECONDS.sleep(1000);
 
             robot.gyrodrive.turn(0.7, 0);
 
@@ -163,6 +163,11 @@ public class AutoBlueBrickMoved extends LinearOpMode {
             robot.rfeedMotor.setPower(0);
             robot.lfeedMotor.setPower(0);
 
+            //close feeder
+            robot.mfeedMotor.setPower(feederWide);
+            TimeUnit.MILLISECONDS.sleep(100);
+            robot.mfeedMotor.setPower(0);
+
 
             robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(.9), robot.getHeading());
 
@@ -182,7 +187,7 @@ public class AutoBlueBrickMoved extends LinearOpMode {
             robot.blMotor.setPower(0);
             robot.brMotor.setPower(0);
 
-            TimeUnit.MILLISECONDS.sleep(1000);
+            TimeUnit.MILLISECONDS.sleep(500);
 
             //from middle blue line, move back towards platform
             robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-1.3), 0);
@@ -215,7 +220,7 @@ public class AutoBlueBrickMoved extends LinearOpMode {
             servoUp();
 
 
-            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(.7), 0);
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(.5), -90);
             //lower feeder
             robot.liftMotor.setPower(.2);
             TimeUnit.MILLISECONDS.sleep(700);
@@ -242,7 +247,7 @@ public class AutoBlueBrickMoved extends LinearOpMode {
             //make sure facing correct direction
             robot.gyrodrive.turn(0.7, 0);
 
-
+            robot.gyrodrive.vertical(1.0, Convert.tileToYeetGV(2), 0);
 
 
             ///move left to blue line

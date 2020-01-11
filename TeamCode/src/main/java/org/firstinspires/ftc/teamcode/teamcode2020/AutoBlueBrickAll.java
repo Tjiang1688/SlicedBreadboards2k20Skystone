@@ -64,7 +64,7 @@ public class AutoBlueBrickAll extends LinearOpMode {
         double feederPow = 0;
         double feederWide = 0;
         ///////////////TODO before competition change floorBlue and close feeder
-        int floorBlue = 600;
+        int floorBlue = 500;
         final double SCALE_FACTOR = 255;
         float hsvValues[] = {0F, 0F, 0F};
         boolean skystone = false;
@@ -103,13 +103,13 @@ public class AutoBlueBrickAll extends LinearOpMode {
             robot.brMotor.setPower(0);
 
 
-            TimeUnit.MILLISECONDS.sleep(1000);
+            //TimeUnit.MILLISECONDS.sleep(1000);
 
             robot.gyrodrive.turn(0.7, 0);
 
 
             //while not skystone, move forwards
-            while (!(colorSensor.red() + colorSensor.blue() + colorSensor.green() < 700)){
+            while (!(colorSensor.red() + colorSensor.blue() + colorSensor.green() < 800)){
                 ///forward
                 robot.flMotor.setPower(-v1);
                 robot.frMotor.setPower(-v1);
@@ -129,7 +129,7 @@ public class AutoBlueBrickAll extends LinearOpMode {
 
 
             //SLIIIIIIIDE to the left
-            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-.55), robot.getHeading());
+            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-.56), robot.getHeading());
 
 
 
@@ -149,7 +149,7 @@ public class AutoBlueBrickAll extends LinearOpMode {
 
             //close feeder
             robot.mfeedMotor.setPower(feederWide);
-            TimeUnit.MILLISECONDS.sleep(900);
+            TimeUnit.MILLISECONDS.sleep(650);
             robot.mfeedMotor.setPower(0);
 
 
@@ -162,6 +162,11 @@ public class AutoBlueBrickAll extends LinearOpMode {
             }
             robot.rfeedMotor.setPower(0);
             robot.lfeedMotor.setPower(0);
+
+            //close feeder
+            robot.mfeedMotor.setPower(feederWide);
+            TimeUnit.MILLISECONDS.sleep(100);
+            robot.mfeedMotor.setPower(0);
 
 
             robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(.9), robot.getHeading());
@@ -183,30 +188,47 @@ public class AutoBlueBrickAll extends LinearOpMode {
             robot.blMotor.setPower(0);
             robot.brMotor.setPower(0);
 
-            TimeUnit.MILLISECONDS.sleep(1000);
+            TimeUnit.MILLISECONDS.sleep(500);
 
 
             //from middle blue line, move back towards platform
-            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-2.8), 0);
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-1.3), 0);
+
+            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-.9), 0);
+
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-1.5), 0);
 
 
             //turn to platform on left (not moved by alliance partner)
             robot.gyrodrive.turn(0.7, 90);
+
+            servoUp();
 
 
 
             //lift block over platform
             //so apparently negative is up
             robot.liftMotor.setPower(-.8);
-            TimeUnit.MILLISECONDS.sleep(900);
+            TimeUnit.MILLISECONDS.sleep(1800);
             robot.liftMotor.setPower(0);
-            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(.2), 0);
+
+
+
+
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(1), 90);
             robot.liftMotor.setPower(.2);
-            TimeUnit.MILLISECONDS.sleep(500);
+            TimeUnit.MILLISECONDS.sleep(700);
             robot.liftMotor.setPower(0);
 
 
             //open feeder to let go of block
+            feederWide = 0.5;
+            robot.rfeedMotor.setPower(feederPow);
+            robot.lfeedMotor.setPower(-feederPow);
+            TimeUnit.MILLISECONDS.sleep(600);
+            robot.lfeedMotor.setPower(0);
+            robot.rfeedMotor.setPower(0);
+
             robot.mfeedMotor.setPower(-feederWide);
             TimeUnit.MILLISECONDS.sleep(900);
             robot.mfeedMotor.setPower(0);
@@ -219,30 +241,32 @@ public class AutoBlueBrickAll extends LinearOpMode {
 
 
             ///////////////////////////// TODO find up down angles
-            robot.servoDown();
+            servoDown();
 
 
-            TimeUnit.MILLISECONDS.sleep(1000);
+            //TimeUnit.MILLISECONDS.sleep(1000);
 
 
             //drag platform back
-            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-1.4), robot.getHeading());
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-1.4), 90);
 
-
+            //TimeUnit.MILLISECONDS.sleep(1000);
             ////////////TODO idk bro
-            robot.servoUp();
+            servoUp();
 
 
             //make sure facing correct direction
-            robot.gyrodrive.turn(0.7, 90);
+            robot.gyrodrive.turn(0.7, 0);
+
+            robot.gyrodrive.vertical(1, Convert.tileToYeetGV(1.5), 0);
 
 
             ///move right to blue line
             while (floorColorSensor.blue()<floorBlue){
                 ///right
                 robot.flMotor.setPower(-v1);
-                robot.frMotor.setPower(v1);
-                robot.blMotor.setPower(v1);
+                robot.frMotor.setPower(-v1);
+                robot.blMotor.setPower(-v1);
                 robot.brMotor.setPower(-v1);
             }
             robot.flMotor.setPower(0);
