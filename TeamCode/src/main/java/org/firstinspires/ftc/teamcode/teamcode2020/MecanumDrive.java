@@ -79,13 +79,13 @@ public class MecanumDrive extends LinearOpMode {
             if (gamepad1.dpad_down) {
                 lServo.setPosition(0.75f);
                 rServo.setPosition(0.25f);
-                lServo.setPosition(0.5f);
-                rServo.setPosition(0.5f);
+                lServo.setPosition(1.0f);
+                rServo.setPosition(0.0f);
             } else if (gamepad1.dpad_up) {
                 lServo.setPosition(0.75f);
                 rServo.setPosition(0.25f);
-                lServo.setPosition(1.0f);
-                rServo.setPosition(0.0f);
+                lServo.setPosition(0.5f);
+                rServo.setPosition(0.5f);
             } else{
 
             }
