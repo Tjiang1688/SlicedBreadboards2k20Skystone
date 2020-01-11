@@ -34,6 +34,7 @@ public class AutoBlueBrickAll extends LinearOpMode {
     private ColorSensor colorSensor;
     private ColorSensor floorColorSensor;
     private TouchSensor touchSensor;
+    private TouchSensor backTouch;
     private DistanceSensor distanceSensor;
     private Servo lServo;
     private Servo rServo;
@@ -53,6 +54,7 @@ public class AutoBlueBrickAll extends LinearOpMode {
 
         //nameOfThingInCode = hardwareMap.typeOfThing.get("nameOfThingInConfiguration");
         touchSensor = hardwareMap.touchSensor.get("touchSensor");
+        backTouch = hardwareMap.touchSensor.get("backTouch");
         colorSensor = hardwareMap.get(ColorSensor.class, "colorSensor");
         distanceSensor = hardwareMap.get(DistanceSensor.class, "colorSensor");
         floorColorSensor = hardwareMap.get(ColorSensor.class, "floorColorSensor");
@@ -70,6 +72,7 @@ public class AutoBlueBrickAll extends LinearOpMode {
         boolean skystone = false;
         int stoneCount = 0;
         double v1 = .4;
+        int floorGrey;
 
 
         //MAKE SURE FEEDER IS IN CLOSED POSITION BEFORE START
@@ -86,6 +89,8 @@ public class AutoBlueBrickAll extends LinearOpMode {
             Color.RGBToHSV((int)(floorColorSensor.red() * SCALE_FACTOR), (int) (floorColorSensor.green() * SCALE_FACTOR), (int) (floorColorSensor.blue() * SCALE_FACTOR), hsvValues);
 
             robot.composeIMUTelemetry();
+
+            floorGrey = floorColorSensor.blue();
 
 
             //robot starts parallel to wall and moves horizontal to be next to and parallel to the bricks
@@ -176,7 +181,7 @@ public class AutoBlueBrickAll extends LinearOpMode {
 
 
             //go back until blue line
-            while (floorColorSensor.blue()<floorBlue){
+            while (floorColorSensor.blue() < floorBlue & (floorColorSensor.blue()-floorGrey) < 70 & backTouch.getValue() !=1){
                 ///backward
                 robot.flMotor.setPower(v1);
                 robot.frMotor.setPower(v1);

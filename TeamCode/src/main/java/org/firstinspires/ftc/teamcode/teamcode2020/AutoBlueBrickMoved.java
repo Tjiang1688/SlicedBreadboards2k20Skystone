@@ -180,7 +180,7 @@ public class AutoBlueBrickMoved extends LinearOpMode {
 
             //go back until blue line
 
-            while (floorColorSensor.blue() < floorBlue || (floorColorSensor.blue()-floorGrey) < 50 || backTouch.getValue() !=1) {
+            while (floorColorSensor.blue() < floorBlue & (floorColorSensor.blue()-floorGrey) < 70 & backTouch.getValue() !=1) {
 
                 ///backward
                 robot.flMotor.setPower(v1);
@@ -200,7 +200,7 @@ public class AutoBlueBrickMoved extends LinearOpMode {
                 robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-1.3), 0);
 
                 robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-.9), 0);
-                
+
                 robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-1.5), 0);
             }
 
