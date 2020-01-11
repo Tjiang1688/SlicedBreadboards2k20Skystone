@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.teamcode2020;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 @TeleOp(name = "MecanumDrive", group = "Drive")  // @Autonomous(...) is the other common choice
@@ -11,9 +12,17 @@ public class MecanumDrive extends LinearOpMode {
 
     /* Declare OpMode members. */
     private ElapsedTime runtime = new ElapsedTime();
+    private Servo lServo;
+    private Servo rServo;
+
+
 
     @Override
     public void runOpMode() {
+
+        lServo = hardwareMap.servo.get("lServo");
+        rServo = hardwareMap.servo.get("rServo");
+
         telemetry.addData("Status", "Initialized");
         telemetry.update();
         Robot2017 robot = new Robot2017();
@@ -65,9 +74,23 @@ public class MecanumDrive extends LinearOpMode {
             } else {
                 feederWide = 0;
             }
+
+
+            if (gamepad1.dpad_down) {
+                lServo.setPosition(0.75f);
+                rServo.setPosition(0.25f);
+                lServo.setPosition(0.5f);
+                rServo.setPosition(0.5f);
+            } else if (gamepad1.dpad_up) {
+                lServo.setPosition(0.75f);
+                rServo.setPosition(0.25f);
+                lServo.setPosition(1.0f);
+                rServo.setPosition(0.0f);
+            } else{
+
+            }
+
             /*
-
-
             if (gamepad2.right_trigger > .5 && robot.markerServo.getPosition() < 0.7994) {
                 robot.markerServo.setPosition(robot.markerServo.getPosition() + .01);
             } else if (gamepad2.right_bumper && robot.markerServo.getPosition() > 0.4698) {

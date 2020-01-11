@@ -41,9 +41,19 @@ public class AutoBlueBrickAll extends LinearOpMode {
 
 
     //TODO find values for up and down servo
-    public void servoDown(){ lServo.setPosition(.487f); rServo.setPosition(.487f); }
+    public void servoUp() {
+        lServo.setPosition(0.75f);
+        rServo.setPosition(0.25f);
+        lServo.setPosition(1.0f);
+        rServo.setPosition(0.0f);
+    }
 
-    public void servoUp(){ lServo.setPosition(.637f); rServo.setPosition(.637f); }
+    public void servoDown() {
+        lServo.setPosition(0.75f);
+        rServo.setPosition(0.25f);
+        lServo.setPosition(0.5f);
+        rServo.setPosition(0.5f);
+    }
 
 
     public void runOpMode() throws InterruptedException {
