@@ -34,6 +34,7 @@ public class AutoBlueBrickMoved extends LinearOpMode {
     private ColorSensor colorSensor;
     private ColorSensor floorColorSensor;
     private TouchSensor touchSensor;
+    private TouchSensor backTouch;
     private DistanceSensor distanceSensor;
     private TouchSensor servoTouchSensor;
     private Servo lServo;
@@ -62,6 +63,7 @@ public class AutoBlueBrickMoved extends LinearOpMode {
 
         //nameOfThingInCode = hardwareMap.typeOfThing.get("nameOfThingInConfiguration");
         touchSensor = hardwareMap.touchSensor.get("touchSensor");
+        backTouch = hardwareMap.touchSensor.get("backTouch");
         colorSensor = hardwareMap.get(ColorSensor.class, "colorSensor");
         distanceSensor = hardwareMap.get(DistanceSensor.class, "colorSensor");
         floorColorSensor = hardwareMap.get(ColorSensor.class, "floorColorSensor");
@@ -79,6 +81,7 @@ public class AutoBlueBrickMoved extends LinearOpMode {
         int stoneCount = 0;
         double v1 = .4;
         int floorGrey;
+        boolean backWall = false;
 
 
         //inputGameConfig();
@@ -177,7 +180,7 @@ public class AutoBlueBrickMoved extends LinearOpMode {
 
             //go back until blue line
 
-            while (floorColorSensor.blue() < floorBlue || (floorColorSensor.blue()-floorGrey) < 50) {
+            while (floorColorSensor.blue() < floorBlue || (floorColorSensor.blue()-floorGrey) < 50 || backTouch.getValue() !=1) {
 
                 ///backward
                 robot.flMotor.setPower(v1);
@@ -193,12 +196,13 @@ public class AutoBlueBrickMoved extends LinearOpMode {
             TimeUnit.MILLISECONDS.sleep(500);
 
             //from middle blue line, move back towards platform
-            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-1.3), 0);
+            if (backTouch.getValue() !=1) {
+                robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-1.3), 0);
 
-            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-.9), 0);
-
-
-            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-1.5), 0);
+                robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-.9), 0);
+                
+                robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-1.5), 0);
+            }
 
 
             //turn to platform on right (already moved by alliance partner)
