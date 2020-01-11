@@ -14,5 +14,5 @@ android {
     buildToolsVersion '26.0.2'
 }
 dependencies {
-    compile files('/Users/22tjiang/Documents/GitHub/SlicedBreadboards2k20Skystone/libs/RobotCore-release-sources.jar')
+    compile files('/Users/20smcnamara/PycharmProjects/Clock/SlicedBreadboards2k20Skystone/libs/RobotCore-release-sources.jar')
 }
