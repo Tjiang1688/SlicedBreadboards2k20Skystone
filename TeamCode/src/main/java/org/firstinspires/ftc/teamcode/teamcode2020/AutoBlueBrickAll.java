@@ -64,7 +64,7 @@ public class AutoBlueBrickAll extends LinearOpMode {
         double feederPow = 0;
         double feederWide = 0;
         ///////////////TODO before competition change floorBlue and close feeder
-        int floorBlue = 500;
+        int floorBlue = 350;
         final double SCALE_FACTOR = 255;
         float hsvValues[] = {0F, 0F, 0F};
         boolean skystone = false;
@@ -109,7 +109,7 @@ public class AutoBlueBrickAll extends LinearOpMode {
 
 
             //while not skystone, move forwards
-            while (!(colorSensor.red() + colorSensor.blue() + colorSensor.green() < 800)){
+            while (!(colorSensor.red() + colorSensor.blue() + colorSensor.green() < 400)){
                 ///forward
                 robot.flMotor.setPower(-v1);
                 robot.frMotor.setPower(-v1);

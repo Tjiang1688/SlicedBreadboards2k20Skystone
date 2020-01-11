@@ -80,7 +80,7 @@ public class AutoRedBrickMoved extends LinearOpMode {
         boolean skystone = false;
         int stoneCount = 0;
         double v1 = .4;
-        int floorRed = 230;
+        int floorRed = 260;
 
 
         //inputGameConfig();
@@ -100,7 +100,7 @@ public class AutoRedBrickMoved extends LinearOpMode {
 
             //robot starts parallel to wall and moves horizontal to be next to and parallel to the bricks
             //while too far away, move closer
-            while (!(distanceSensor.getDistance(DistanceUnit.INCH) < 3.6)) {
+            while (!(distanceSensor.getDistance(DistanceUnit.INCH) < 2)) {
                 ///right
                 robot.flMotor.setPower(-v1/1.5);
                 robot.frMotor.setPower(v1/1.5);
@@ -120,7 +120,7 @@ public class AutoRedBrickMoved extends LinearOpMode {
 
 
             //while not skystone, move forwards
-            while (!(colorSensor.red() + colorSensor.blue() + colorSensor.green() < 4000)) {
+            while (!(colorSensor.red() + colorSensor.blue() + colorSensor.green() < 1700)) {
                 ///forward
                 robot.flMotor.setPower(-v1/1.3);
                 robot.frMotor.setPower(-v1/1.3);
@@ -196,7 +196,6 @@ public class AutoRedBrickMoved extends LinearOpMode {
             robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-1.3), 0);
 
             robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(.9), 0);
-
 
             robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-1.5), 0);
 
