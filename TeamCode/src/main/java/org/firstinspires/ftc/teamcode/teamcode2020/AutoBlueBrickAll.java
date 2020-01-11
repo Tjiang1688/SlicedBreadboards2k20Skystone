@@ -192,11 +192,8 @@ public class AutoBlueBrickAll extends LinearOpMode {
 
 
             //from middle blue line, move back towards platform
-            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-1.3), 0);
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-2.8), 0);
 
-            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-.9), 0);
-
-            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-1.5), 0);
 
 
             //turn to platform on left (not moved by alliance partner)
@@ -215,7 +212,7 @@ public class AutoBlueBrickAll extends LinearOpMode {
 
 
 
-            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(1), 90);
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(1.5), 90);
             robot.liftMotor.setPower(.2);
             TimeUnit.MILLISECONDS.sleep(700);
             robot.liftMotor.setPower(0);

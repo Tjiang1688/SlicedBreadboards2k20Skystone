@@ -78,6 +78,7 @@ public class AutoBlueBrickMoved extends LinearOpMode {
         boolean skystone = false;
         int stoneCount = 0;
         double v1 = .4;
+        int floorGrey;
 
 
         //inputGameConfig();
@@ -97,6 +98,8 @@ public class AutoBlueBrickMoved extends LinearOpMode {
 
             //robot starts parallel to wall and moves horizontal to be next to and parallel to the bricks
             //while too far away, move closer
+            floorGrey = floorColorSensor.blue();
+
             while (!(distanceSensor.getDistance(DistanceUnit.INCH) < 3.6)) {
                 ///left
                 robot.flMotor.setPower(v1);
@@ -174,7 +177,7 @@ public class AutoBlueBrickMoved extends LinearOpMode {
 
             //go back until blue line
 
-            while (floorColorSensor.blue() < floorBlue) {
+            while (floorColorSensor.blue() < floorBlue || (floorColorSensor.blue()-floorGrey) > 60) {
 
                 ///backward
                 robot.flMotor.setPower(v1);

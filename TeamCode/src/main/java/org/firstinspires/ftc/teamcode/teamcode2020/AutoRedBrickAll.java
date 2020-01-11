@@ -192,12 +192,9 @@ public class AutoRedBrickAll extends LinearOpMode {
 
 
             //from middle blue line, move back towards platform
-            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-1.3), 0);
-
-            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(.9), 0);
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-2.8), 0);
 
 
-            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-1.5), 0);
 
 
             //turn to platform on right (not moved by alliance partner)
@@ -213,7 +210,7 @@ public class AutoRedBrickAll extends LinearOpMode {
             servoUp();
 
 
-            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(1), 0);
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(1.5       ), 0);
             //lower feeder
             robot.liftMotor.setPower(.2);
             TimeUnit.MILLISECONDS.sleep(700);
