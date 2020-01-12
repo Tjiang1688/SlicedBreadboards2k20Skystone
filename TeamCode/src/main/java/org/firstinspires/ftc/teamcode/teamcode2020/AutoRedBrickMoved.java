@@ -38,6 +38,7 @@ public class AutoRedBrickMoved extends LinearOpMode {
     private TouchSensor servoTouchSensor;
     private Servo lServo;
     private Servo rServo;
+    private TouchSensor backTouch;
 
     public void servoUp() {
         lServo.setPosition(0.75f);
@@ -69,6 +70,7 @@ public class AutoRedBrickMoved extends LinearOpMode {
         colorSensor = hardwareMap.get(ColorSensor.class, "colorSensorRight");
         distanceSensor = hardwareMap.get(DistanceSensor.class, "actualDistance");
         servoTouchSensor = hardwareMap.touchSensor.get("servoTouchSensor");
+        backTouch = hardwareMap.touchSensor.get("backTouch");
         lServo = hardwareMap.servo.get("lServo");
         rServo = hardwareMap.servo.get("rServo");
 
@@ -81,6 +83,7 @@ public class AutoRedBrickMoved extends LinearOpMode {
         int stoneCount = 0;
         double v1 = .4;
         int floorRed = 260;
+        int floorGrey;
 
 
         //inputGameConfig();
@@ -97,6 +100,8 @@ public class AutoRedBrickMoved extends LinearOpMode {
             Color.RGBToHSV((int) (floorColorSensor.red() * SCALE_FACTOR), (int) (floorColorSensor.green() * SCALE_FACTOR), (int) (floorColorSensor.blue() * SCALE_FACTOR), hsvValues);
 
             robot.composeIMUTelemetry();
+
+            floorGrey = floorColorSensor.red();
 
             //robot starts parallel to wall and moves horizontal to be next to and parallel to the bricks
             //while too far away, move closer
@@ -177,7 +182,7 @@ public class AutoRedBrickMoved extends LinearOpMode {
 
 
             //go back until red line
-            while (floorColorSensor.red() < floorRed) {  /////////////TODO FIND A VALUE FOR THE RED
+            while (floorColorSensor.red() < floorRed & (floorColorSensor.red()-floorGrey) < 70 & backTouch.getValue() !=1) {  /////////////TODO FIND A VALUE FOR THE RED
                 ///backward
                 robot.flMotor.setPower(v1);
                 robot.frMotor.setPower(v1);
