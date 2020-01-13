@@ -16,7 +16,6 @@ public class MecanumDrive extends LinearOpMode {
     private Servo rServo;
 
 
-
     @Override
     public void runOpMode() {
 
@@ -131,7 +130,7 @@ public class MecanumDrive extends LinearOpMode {
             }
 
 
-            //TODO idk what happened here but it seems like these power values are wrong
+
             if(gamepad2.right_stick_y < 0){
                 robot.liftMotor.setPower(-.8);
             } else if(gamepad2.right_stick_y > 0) {
