@@ -25,7 +25,7 @@ apply from: '../build.common.gradle'
 android {
     defaultConfig {
         minSdkVersion 19
-        targetSdkVersion 19
+        targetSdkVersion 26
         multiDexEnabled true
     }
     compileOptions {

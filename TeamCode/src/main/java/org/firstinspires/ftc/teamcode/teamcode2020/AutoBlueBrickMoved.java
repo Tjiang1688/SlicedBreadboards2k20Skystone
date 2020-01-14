@@ -82,6 +82,7 @@ public class AutoBlueBrickMoved extends LinearOpMode {
         double v1 = .4;
         int floorGrey;
         boolean backWall = false;
+        int firstStone;
 
 
         //inputGameConfig();
@@ -120,7 +121,10 @@ public class AutoBlueBrickMoved extends LinearOpMode {
 
             robot.gyrodrive.turn(0.7, 0);
 
+            firstStone = colorSensor.red() + colorSensor.blue() + colorSensor.green();
 
+
+            /*
             //while not skystone, move forwards
             while (!(colorSensor.red() + colorSensor.blue() + colorSensor.green() < 400)) {
                 ///forward
@@ -133,10 +137,37 @@ public class AutoBlueBrickMoved extends LinearOpMode {
             robot.frMotor.setPower(0);
             robot.blMotor.setPower(0);
             robot.brMotor.setPower(0);
+             */
 
 
+
+
+
+            //while not skystone, move forwards
+            while (((colorSensor.red() + colorSensor.blue() + colorSensor.green()-firstStone) <130) & ((colorSensor.red() + colorSensor.blue() + colorSensor.green()-firstStone) > -130)) {
+                ///forward
+                robot.flMotor.setPower(-v1);
+                robot.frMotor.setPower(-v1);
+                robot.blMotor.setPower(-v1);
+                robot.brMotor.setPower(-v1);
+            }
+            robot.flMotor.setPower(0);
+            robot.frMotor.setPower(0);
+            robot.blMotor.setPower(0);
+            robot.brMotor.setPower(0);
+
+
+
+            
             //robot goes back to knock the other bricks out of the way to be in front of the skystone
-            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-.75), robot.getHeading());  // .55 is the length of the front of the robot
+            if ((colorSensor.red() + colorSensor.blue() + colorSensor.green()-firstStone) <130) {
+                robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-.75), robot.getHeading());
+                ///// todo find distance to go back if skystone is first block
+            } else {
+                robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-.8), robot.getHeading());
+            }
+
+            // .55 is the length of the front of the robot
 
 
             //SLIIIIIIIDE to the left
