@@ -40,14 +40,14 @@ public class AutoBlueBrickMoved extends LinearOpMode {
     private Servo lServo;
     private Servo rServo;
 
-    public void servoUp() {
+    public void servoDown() {
         lServo.setPosition(0.75f);
         rServo.setPosition(0.25f);
         lServo.setPosition(1.0f);
         rServo.setPosition(0.0f);
     }
 
-    public void servoDown() {
+    public void servoUp() {
         lServo.setPosition(0.75f);
         rServo.setPosition(0.25f);
         lServo.setPosition(0.5f);
@@ -142,9 +142,12 @@ public class AutoBlueBrickMoved extends LinearOpMode {
 
 
 
+            // TODO so mr lavigne says that we should reset the value of the reference color block
+            // todo everytime that it checks it in the while loop but like that doesn't make sense idk man
+            // todo
 
             //while not skystone, move forwards
-            while (((colorSensor.red() + colorSensor.blue() + colorSensor.green()-firstStone) <130) & ((colorSensor.red() + colorSensor.blue() + colorSensor.green()-firstStone) > -130)) {
+            while (((colorSensor.red() + colorSensor.blue() + colorSensor.green()-firstStone) <140) & ((colorSensor.red() + colorSensor.blue() + colorSensor.green()-firstStone) > -140)) {
                 ///forward
                 robot.flMotor.setPower(-v1);
                 robot.frMotor.setPower(-v1);
@@ -158,9 +161,9 @@ public class AutoBlueBrickMoved extends LinearOpMode {
 
 
 
-            
+
             //robot goes back to knock the other bricks out of the way to be in front of the skystone
-            if ((colorSensor.red() + colorSensor.blue() + colorSensor.green()-firstStone) <130) {
+            if ((colorSensor.red() + colorSensor.blue() + colorSensor.green()-firstStone) <140) {
                 robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-.75), robot.getHeading());
                 ///// todo find distance to go back if skystone is first block
             } else {

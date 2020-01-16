@@ -41,14 +41,14 @@ public class AutoBlueBrickAll extends LinearOpMode {
 
 
     //TODO find values for up and down servo
-    public void servoUp() {
+    public void servoDown() {
         lServo.setPosition(0.75f);
         rServo.setPosition(0.25f);
         lServo.setPosition(1.0f);
         rServo.setPosition(0.0f);
     }
 
-    public void servoDown() {
+    public void servoUp() {
         lServo.setPosition(0.75f);
         rServo.setPosition(0.25f);
         lServo.setPosition(0.5f);
@@ -83,6 +83,7 @@ public class AutoBlueBrickAll extends LinearOpMode {
         int stoneCount = 0;
         double v1 = .4;
         int floorGrey;
+        int firstStone;
 
 
         //MAKE SURE FEEDER IS IN CLOSED POSITION BEFORE START
@@ -118,13 +119,17 @@ public class AutoBlueBrickAll extends LinearOpMode {
             robot.brMotor.setPower(0);
 
 
+
+
             //TimeUnit.MILLISECONDS.sleep(1000);
 
             robot.gyrodrive.turn(0.7, 0);
 
+            firstStone = colorSensor.red() + colorSensor.blue() + colorSensor.green();
+
 
             //while not skystone, move forwards
-            while (!(colorSensor.red() + colorSensor.blue() + colorSensor.green() < 400)){
+            while (((colorSensor.red() + colorSensor.blue() + colorSensor.green()-firstStone) <140) & ((colorSensor.red() + colorSensor.blue() + colorSensor.green()-firstStone) > -140)) {
                 ///forward
                 robot.flMotor.setPower(-v1);
                 robot.frMotor.setPower(-v1);
@@ -138,14 +143,16 @@ public class AutoBlueBrickAll extends LinearOpMode {
 
 
 
+
             //robot goes back to knock the other bricks out of the way to be in front of the skystone
-            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-.75), robot.getHeading());  // .55 is the length of the front of the robot
+            if ((colorSensor.red() + colorSensor.blue() + colorSensor.green()-firstStone) <140) {
+                robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-.75), robot.getHeading());
+                ///// todo find distance to go back if skystone is first block
+            } else {
+                robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-.8), robot.getHeading());
+            }
 
-
-
-            //SLIIIIIIIDE to the left
-            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-.56), robot.getHeading());
-
+            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-.56), 0);
 
 
             //open feeder
@@ -214,7 +221,6 @@ public class AutoBlueBrickAll extends LinearOpMode {
             //turn to platform on left (not moved by alliance partner)
             robot.gyrodrive.turn(0.7, 90);
 
-            servoUp();
 
 
 
@@ -253,8 +259,9 @@ public class AutoBlueBrickAll extends LinearOpMode {
 
 
             ///////////////////////////// TODO find up down angles
+            TimeUnit.MILLISECONDS.sleep(500);
             servoDown();
-
+            TimeUnit.MILLISECONDS.sleep(500);
 
             //TimeUnit.MILLISECONDS.sleep(1000);
 
@@ -264,8 +271,9 @@ public class AutoBlueBrickAll extends LinearOpMode {
 
             //TimeUnit.MILLISECONDS.sleep(1000);
             ////////////TODO idk bro
+            TimeUnit.MILLISECONDS.sleep(500);
             servoUp();
-
+            TimeUnit.MILLISECONDS.sleep(500);
 
             //make sure facing correct direction
             robot.gyrodrive.turn(0.7, 0);

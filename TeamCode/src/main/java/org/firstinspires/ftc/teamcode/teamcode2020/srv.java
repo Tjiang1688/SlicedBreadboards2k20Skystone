@@ -39,10 +39,19 @@ public class srv extends LinearOpMode {
     private Servo rServo;
 
 
-    public void servoUp(){ lServo.setPosition(0.75f); rServo.setPosition(0.25f); lServo.setPosition(1.0f); rServo.setPosition(0.0f); }
+    public void servoDown() {
+        lServo.setPosition(0.75f);
+        rServo.setPosition(0.25f);
+        lServo.setPosition(1.0f);
+        rServo.setPosition(0.0f);
+    }
 
-    public void servoDown(){ lServo.setPosition(0.75f); rServo.setPosition(0.25f); lServo.setPosition(0.5f); rServo.setPosition(0.5f);}
-
+    public void servoUp() {
+        lServo.setPosition(0.75f);
+        rServo.setPosition(0.25f);
+        lServo.setPosition(0.5f);
+        rServo.setPosition(0.5f);
+    }
 
 
 
@@ -103,8 +112,6 @@ public class srv extends LinearOpMode {
 
             TimeUnit.MILLISECONDS.sleep(2000);
 
-
-            lServo.setPosition(0.75f); rServo.setPosition(0.25f); lServo.setPosition(0.0f); rServo.setPosition(1.0f);
 
 
             break;

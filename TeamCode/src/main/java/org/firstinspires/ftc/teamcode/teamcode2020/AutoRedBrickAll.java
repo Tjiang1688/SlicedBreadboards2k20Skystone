@@ -39,14 +39,14 @@ public class AutoRedBrickAll extends LinearOpMode {
     private Servo lServo;
     private Servo rServo;
 
-    public void servoUp() {
+    public void servoDown() {
         lServo.setPosition(0.75f);
         rServo.setPosition(0.25f);
         lServo.setPosition(1.0f);
         rServo.setPosition(0.0f);
     }
 
-    public void servoDown() {
+    public void servoUp() {
         lServo.setPosition(0.75f);
         rServo.setPosition(0.25f);
         lServo.setPosition(0.5f);
@@ -80,7 +80,8 @@ public class AutoRedBrickAll extends LinearOpMode {
         boolean skystone = false;
         int stoneCount = 0;
         double v1 = .4;
-        int floorRed = 260;
+        int floorRed = 120;
+        int firstStone;
 
 
         //inputGameConfig();
@@ -116,15 +117,16 @@ public class AutoRedBrickAll extends LinearOpMode {
             //TimeUnit.MILLISECONDS.sleep(1000);
 
             robot.gyrodrive.turn(0.7, 0);
+            firstStone = colorSensor.red() + colorSensor.blue() + colorSensor.green();
 
 
             //while not skystone, move forwards
-            while (!(colorSensor.red() + colorSensor.blue() + colorSensor.green() < 1700)) {
+            while (((colorSensor.red() + colorSensor.blue() + colorSensor.green()-firstStone) <140) & ((colorSensor.red() + colorSensor.blue() + colorSensor.green()-firstStone) > -140)) {
                 ///forward
-                robot.flMotor.setPower(-v1/1.3);
-                robot.frMotor.setPower(-v1/1.3);
-                robot.blMotor.setPower(-v1/1.3);
-                robot.brMotor.setPower(-v1/1.3);
+                robot.flMotor.setPower(-v1);
+                robot.frMotor.setPower(-v1);
+                robot.blMotor.setPower(-v1);
+                robot.brMotor.setPower(-v1);
             }
             robot.flMotor.setPower(0);
             robot.frMotor.setPower(0);
@@ -132,13 +134,18 @@ public class AutoRedBrickAll extends LinearOpMode {
             robot.brMotor.setPower(0);
 
 
+
+
             //robot goes back to knock the other bricks out of the way to be in front of the skystone
-            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-.83), robot.getHeading());  // .55 is the length of the front of the robot
+            if ((colorSensor.red() + colorSensor.blue() + colorSensor.green()-firstStone) <140) {
+                robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-.75), robot.getHeading());
+                ///// todo find distance to go back if skystone is first block
+            } else {
+                robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-.8), robot.getHeading());
+            }
 
 
-            //SLIIIIIIIDE to the right
-            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(.56), robot.getHeading());
-
+            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(.56), 0);
 
             //open feeder
             feederWide = 0.5;
@@ -210,7 +217,7 @@ public class AutoRedBrickAll extends LinearOpMode {
             servoUp();
 
 
-            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(1.5       ), 0);
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(1.5), 0);
             //lower feeder
             robot.liftMotor.setPower(.2);
             TimeUnit.MILLISECONDS.sleep(700);

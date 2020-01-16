@@ -40,14 +40,14 @@ public class AutoRedBrickMoved extends LinearOpMode {
     private Servo rServo;
     private TouchSensor backTouch;
 
-    public void servoUp() {
+    public void servoDown() {
         lServo.setPosition(0.75f);
         rServo.setPosition(0.25f);
         lServo.setPosition(1.0f);
         rServo.setPosition(0.0f);
     }
 
-    public void servoDown() {
+    public void servoUp() {
         lServo.setPosition(0.75f);
         rServo.setPosition(0.25f);
         lServo.setPosition(0.5f);
@@ -84,6 +84,7 @@ public class AutoRedBrickMoved extends LinearOpMode {
         double v1 = .4;
         int floorRed = 260;
         int floorGrey;
+        int firstStone;
 
 
         //inputGameConfig();
@@ -123,14 +124,16 @@ public class AutoRedBrickMoved extends LinearOpMode {
 
             robot.gyrodrive.turn(0.7, 0);
 
+            firstStone = colorSensor.red() + colorSensor.blue() + colorSensor.green();
+
 
             //while not skystone, move forwards
-            while (!(colorSensor.red() + colorSensor.blue() + colorSensor.green() < 1700)) {
+            while (((colorSensor.red() + colorSensor.blue() + colorSensor.green()-firstStone) <140) & ((colorSensor.red() + colorSensor.blue() + colorSensor.green()-firstStone) > -140)) {
                 ///forward
-                robot.flMotor.setPower(-v1/1.3);
-                robot.frMotor.setPower(-v1/1.3);
-                robot.blMotor.setPower(-v1/1.3);
-                robot.brMotor.setPower(-v1/1.3);
+                robot.flMotor.setPower(-v1);
+                robot.frMotor.setPower(-v1);
+                robot.blMotor.setPower(-v1);
+                robot.brMotor.setPower(-v1);
             }
             robot.flMotor.setPower(0);
             robot.frMotor.setPower(0);
@@ -138,9 +141,15 @@ public class AutoRedBrickMoved extends LinearOpMode {
             robot.brMotor.setPower(0);
 
 
-            //robot goes back to knock the other bricks out of the way to be in front of the skystone
-            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-.83), robot.getHeading());  // .55 is the length of the front of the robot
 
+
+            //robot goes back to knock the other bricks out of the way to be in front of the skystone
+            if ((colorSensor.red() + colorSensor.blue() + colorSensor.green()-firstStone) <140) {
+                robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-.75), robot.getHeading());
+                ///// todo find distance to go back if skystone is first block
+            } else {
+                robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-.8), robot.getHeading());
+            }
 
             //SLIIIIIIIDE to the right
             robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(.56), robot.getHeading());
