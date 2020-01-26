@@ -123,15 +123,8 @@ public class AutoRedBrickAll extends LinearOpMode {
             //while not skystone, move forwards
             while (((colorSensor.red() + colorSensor.blue() + colorSensor.green()-firstStone) <140) & ((colorSensor.red() + colorSensor.blue() + colorSensor.green()-firstStone) > -140)) {
                 ///forward
-                robot.flMotor.setPower(-v1);
-                robot.frMotor.setPower(-v1);
-                robot.blMotor.setPower(-v1);
-                robot.brMotor.setPower(-v1);
+                robot.gyrodrive.vertical(0.7, Convert.inchesToYeetGV(7.8), 0);
             }
-            robot.flMotor.setPower(0);
-            robot.frMotor.setPower(0);
-            robot.blMotor.setPower(0);
-            robot.brMotor.setPower(0);
 
 
 

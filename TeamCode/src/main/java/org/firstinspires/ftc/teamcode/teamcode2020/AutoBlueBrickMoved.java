@@ -142,32 +142,23 @@ public class AutoBlueBrickMoved extends LinearOpMode {
 
 
 
-            // TODO so mr lavigne says that we should reset the value of the reference color block
-            // todo everytime that it checks it in the while loop but like that doesn't make sense idk man
-            // todo
 
             //while not skystone, move forwards
-            while (((colorSensor.red() + colorSensor.blue() + colorSensor.green()-firstStone) <140) & ((colorSensor.red() + colorSensor.blue() + colorSensor.green()-firstStone) > -140)) {
+            while (((colorSensor.red() + colorSensor.blue() + colorSensor.green()-firstStone) <240) & ((colorSensor.red() + colorSensor.blue() + colorSensor.green()-firstStone) > -240)) {
                 ///forward
-                robot.flMotor.setPower(-v1);
-                robot.frMotor.setPower(-v1);
-                robot.blMotor.setPower(-v1);
-                robot.brMotor.setPower(-v1);
+                robot.gyrodrive.vertical(0.7, Convert.inchesToYeetGV(7.8), 0);
             }
-            robot.flMotor.setPower(0);
-            robot.frMotor.setPower(0);
-            robot.blMotor.setPower(0);
-            robot.brMotor.setPower(0);
+
 
 
 
 
             //robot goes back to knock the other bricks out of the way to be in front of the skystone
-            if ((colorSensor.red() + colorSensor.blue() + colorSensor.green()-firstStone) <140) {
+            if ((colorSensor.red() + colorSensor.blue() + colorSensor.green()-firstStone) <240) {
                 robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-.75), robot.getHeading());
                 ///// todo find distance to go back if skystone is first block
             } else {
-                robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-.8), robot.getHeading());
+                robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-.9), robot.getHeading());
             }
 
             // .55 is the length of the front of the robot
@@ -177,11 +168,16 @@ public class AutoBlueBrickMoved extends LinearOpMode {
             robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-.56), 0);
 
 
+            /*
             //open feeder
             feederWide = 0.5;
             robot.mfeedMotor.setPower(-feederWide);
             TimeUnit.MILLISECONDS.sleep(1000);
             robot.mfeedMotor.setPower(0);
+
+             */
+
+            feederWide = 0.5;
 
 
             //move forward to block
@@ -190,7 +186,7 @@ public class AutoBlueBrickMoved extends LinearOpMode {
 
             //close feeder
             robot.mfeedMotor.setPower(feederWide);
-            TimeUnit.MILLISECONDS.sleep(650);
+            TimeUnit.MILLISECONDS.sleep(1250);
             robot.mfeedMotor.setPower(0);
 
 
