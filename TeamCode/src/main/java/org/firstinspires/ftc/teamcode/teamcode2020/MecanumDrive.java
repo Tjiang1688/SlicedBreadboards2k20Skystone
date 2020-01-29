@@ -15,12 +15,18 @@ public class MecanumDrive extends LinearOpMode {
     private Servo lServo;
     private Servo rServo;
 
+    private Servo lMarkerServo;
+    private Servo rMarkerServo;
+
 
     @Override
     public void runOpMode() {
 
         lServo = hardwareMap.servo.get("lServo");
         rServo = hardwareMap.servo.get("rServo");
+
+        lMarkerServo = hardwareMap.servo.get("lMarkerServo");
+        rMarkerServo = hardwareMap.servo.get("rMarkerServo");
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
@@ -85,9 +91,19 @@ public class MecanumDrive extends LinearOpMode {
                 rServo.setPosition(0.25f);
                 lServo.setPosition(0.5f);
                 rServo.setPosition(0.5f);
-            } else{
+            } else if (gamepad1.dpad_left){
+                lMarkerServo.setPosition(0.5f);
+                lMarkerServo.setPosition(0.0f);
+            } else if (gamepad1.dpad_right){
+                lMarkerServo.setPosition(0.5f);
+                lMarkerServo.setPosition(1.0f);
+            } else {
 
             }
+
+
+
+
 
             /*
             if (gamepad2.right_trigger > .5 && robot.markerServo.getPosition() < 0.7994) {
@@ -132,7 +148,7 @@ public class MecanumDrive extends LinearOpMode {
 
 
             if(gamepad2.right_stick_y < 0){
-                robot.liftMotor.setPower(-.8);
+                robot.liftMotor.setPower(-1);
             } else if(gamepad2.right_stick_y > 0) {
                 robot.liftMotor.setPower(0.2);
             } else {

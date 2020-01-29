@@ -134,7 +134,7 @@ public class AutoRedBrickAll extends LinearOpMode {
                 robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-.75), robot.getHeading());
                 ///// todo find distance to go back if skystone is first block
             } else {
-                robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-.8), robot.getHeading());
+                robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-1.0), robot.getHeading());
             }
 
 
