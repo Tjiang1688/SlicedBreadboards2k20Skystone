@@ -139,6 +139,8 @@ public class AutoBlueBrickMoved extends LinearOpMode {
             robot.brMotor.setPower(0);
              */
 
+            //TODO YOYO TIANA FIND THE POWER FOR LIFT AND CHANGE FOR ALL OP MODES
+
 
 
 
@@ -156,7 +158,7 @@ public class AutoBlueBrickMoved extends LinearOpMode {
             //robot goes back to knock the other bricks out of the way to be in front of the skystone
             if ((colorSensor.red() + colorSensor.blue() + colorSensor.green()-firstStone) <240) {
                 robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-.75), robot.getHeading());
-                ///// todo find distance to go back if skystone is first block
+
             } else {
                 robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(-1.0), robot.getHeading());
             }
@@ -240,19 +242,14 @@ public class AutoBlueBrickMoved extends LinearOpMode {
 
 
             //lift feeder+block over platform
-            robot.liftMotor.setPower(-.8);
+            robot.liftMotor.setPower(-1);
             TimeUnit.MILLISECONDS.sleep(1800);
             robot.liftMotor.setPower(0);
 
 
-            //while not touching platform, move forward
-            while (servoTouchSensor.getValue() != 1) {
-                robot.flMotor.setPower(-.3);
-                robot.frMotor.setPower(-.3);
-                robot.blMotor.setPower(-.3);
-                robot.brMotor.setPower(-.3);
-            }
+            //not touching platform, move forward
 
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(.5), -90);
 
             servoUp();
 
@@ -283,6 +280,9 @@ public class AutoBlueBrickMoved extends LinearOpMode {
 
             //make sure facing correct direction
             robot.gyrodrive.turn(0.7, 0);
+
+            // go to the bridge side of the parking
+            // robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGV(-.6), 0);
 
             robot.gyrodrive.vertical(1.0, Convert.tileToYeetGV(2), 0);
 

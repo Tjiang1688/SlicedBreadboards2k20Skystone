@@ -5,6 +5,29 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import java.util.concurrent.TimeUnit;
+
+import android.graphics.Color;
+
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.robotcore.external.navigation.Position;
+import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
+import org.firstinspires.ftc.teamcode.game.robot.Convert;
+import com.qualcomm.ftccommon.SoundPlayer;
+import org.firstinspires.ftc.teamcode.game.robot.StartPosition;
+
+import java.util.concurrent.TimeUnit;
+
+import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.TouchSensor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
+
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import com.qualcomm.robotcore.hardware.Servo;
+
 @TeleOp(name = "MecanumDrive", group = "Drive")  // @Autonomous(...) is the other common choice
 //@Disabled
 
@@ -20,7 +43,7 @@ public class MecanumDrive extends LinearOpMode {
 
 
     @Override
-    public void runOpMode() {
+    public void runOpMode() throws InterruptedException {
 
         lServo = hardwareMap.servo.get("lServo");
         rServo = hardwareMap.servo.get("rServo");
@@ -41,6 +64,8 @@ public class MecanumDrive extends LinearOpMode {
         double feederWide = 0;
         double[] targets = {0, 0, 0, 0};
         double[] powers = {0, 0, 0, 0};
+        int halfSpeed = 0;
+        int bro=0;
         //motor power is from -1.0 to 1.0;
         telemetry.addData("Status", "Initialized");
         //telemetry.addData("colorsensor", robot.cs.getDeviceName());
@@ -91,7 +116,7 @@ public class MecanumDrive extends LinearOpMode {
                 rServo.setPosition(0.25f);
                 lServo.setPosition(0.5f);
                 rServo.setPosition(0.5f);
-            } else if (gamepad1.dpad_left){
+            } if (gamepad1.dpad_left){
                 lMarkerServo.setPosition(0.5f);
                 lMarkerServo.setPosition(0.0f);
             } else if (gamepad1.dpad_right){
@@ -133,7 +158,14 @@ public class MecanumDrive extends LinearOpMode {
             telemetry.update();
 
             */
+
             if(gamepad1.y){
+                halfSpeed += 1;
+                TimeUnit.MILLISECONDS.sleep(100);
+                }
+
+
+            if (halfSpeed%2 == 1) {
                 robot.flMotor.setPower(v1/2);
                 robot.frMotor.setPower(v2/2);
                 robot.blMotor.setPower(v3/2);
