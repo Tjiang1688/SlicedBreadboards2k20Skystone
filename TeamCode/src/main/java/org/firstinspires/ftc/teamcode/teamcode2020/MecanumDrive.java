@@ -35,25 +35,30 @@ public class MecanumDrive extends LinearOpMode {
 
     /* Declare OpMode members. */
     private ElapsedTime runtime = new ElapsedTime();
+    /*
     private Servo lServo;
     private Servo rServo;
 
     private Servo lMarkerServo;
     private Servo rMarkerServo;
 
+     */
+
 
     @Override
     public void runOpMode() throws InterruptedException {
-
+        /*
         lServo = hardwareMap.servo.get("lServo");
         rServo = hardwareMap.servo.get("rServo");
 
         lMarkerServo = hardwareMap.servo.get("lMarkerServo");
         rMarkerServo = hardwareMap.servo.get("rMarkerServo");
 
+         */
+
         telemetry.addData("Status", "Initialized");
         telemetry.update();
-        Robot2017 robot = new Robot2017();
+        Robot2020 robot = new Robot2020();
         robot.init(hardwareMap);
         // Wait for the game to start (driver presses PLAY)
         // run until the end of the match (driver presses STOP)
@@ -88,7 +93,7 @@ public class MecanumDrive extends LinearOpMode {
             telemetry.addData("right", "Running to %7d :%7d", robot.frMotor.getCurrentPosition(), robot.brMotor.getCurrentPosition());
 
 
-
+            /*
             if (gamepad2.dpad_down) {
                 feederPow = -0.5;
             } else if (gamepad2.dpad_up) {
@@ -125,6 +130,8 @@ public class MecanumDrive extends LinearOpMode {
             } else {
 
             }
+
+             */
 
 
 
@@ -178,6 +185,7 @@ public class MecanumDrive extends LinearOpMode {
             }
 
 
+            /*
 
             if(gamepad2.right_stick_y < 0){
                 robot.liftMotor.setPower(-1);
@@ -191,7 +199,11 @@ public class MecanumDrive extends LinearOpMode {
             robot.rfeedMotor.setPower(feederPow);
             robot.lfeedMotor.setPower(-feederPow);
             robot.mfeedMotor.setPower(feederWide);
+
+             */
             idle(); // Always call idle() at the bottom of your while(opModeIsActive()) loop
+
+
 
         }
     }

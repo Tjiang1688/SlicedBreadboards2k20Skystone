@@ -28,20 +28,23 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 @TeleOp(name = "testleft", group = "auto")
 //originally had it as TeleOp b/c Autonomous wasn't working, but changed back over
 public class testleft extends LinearOpMode {
-    private Robot2017 robot;
+    private Robot2020 robot;
     private ElapsedTime runtime = new ElapsedTime();
     private ColorSensor colorSensor;
     private TouchSensor touchSensor;
     private DistanceSensor distanceSensor;
 
     public void runOpMode() throws InterruptedException {
-        robot = new Robot2017();
+        robot = new Robot2020();
         robot.init(hardwareMap);
         robot.setTelemetry(telemetry);
         robot.setTime(runtime);
+        /*
         touchSensor = hardwareMap.touchSensor.get("touchSensor");
         colorSensor = hardwareMap.get(ColorSensor.class, "colorSensor");
         distanceSensor = hardwareMap.get(DistanceSensor.class, "colorSensor");
+
+         */
 
         double distTravelled = 2.0;
         double feederPow = 0;
@@ -62,7 +65,13 @@ public class testleft extends LinearOpMode {
         while (opModeIsActive()) {
 
 
-            //fix this
+            //lololololol
+
+            robot.gyrodrive.horizontal(0.7, Convert.tileToYeetGH(0.5), robot.getHeading());
+            TimeUnit.MILLISECONDS.sleep(400);
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeetGV(0.5), robot.getHeading());
+            TimeUnit.MILLISECONDS.sleep(400);
+            robot.gyrodrive.turn(0.7, 90);
 
 
 
